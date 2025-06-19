@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гайд по тренировкам — Главная</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background-image: url('images/banner.jpg');
+            background-size: 90%;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .banner {
+            background: rgba(44, 62, 80, 0.8);
+            padding: 24px 32px;
+            border-radius: 16px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.5em;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            max-width: 380px;
+            margin: 0 auto;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+        .banner h1 {
+            margin: 0 0 8px 0;
+        }
+        .banner p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .start-btn-container {
+            padding: 24px 20px;
+            background: rgba(150, 148, 148, 0.9);
+            display: flex;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .start-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 16px 40px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background 0.3s ease;
+        }
+        .start-btn:hover {
+            background: #1a2635;
+        }
+        /* Анимации */
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="banner">
+            <h1>
+                "Лучшая версия себя"
+            </h1>
+            <p>Ваш путь к здоровью и силе начинается здесь</p>
+        </div>
+    </div>
+    <div class="start-btn-container">
+        <a href="main.html" class="start-btn">Начать</a>
+    </div>
+</body>
+</html>

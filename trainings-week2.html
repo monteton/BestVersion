@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Неделя 2 — Еженедельные тренировки</title>
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #2c3e50;
+        }
+        .days-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 100%;
+        }
+        .day-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 14px 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+            display: block;
+        }
+        .day-btn:hover {
+            background: #1a2635;
+            transform: translateY(-2px);
+        }
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 66px;
+            z-index: 100;
+            border-radius: 18px 18px 0 0;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.93em;
+            gap: 2px;
+            transition: color 0.2s;
+            padding: 6px 0;
+        }
+        .nav-item.active, .nav-item:active {
+            color: #222;
+        }
+        .nav-icon {
+            font-size: 1.34em;
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 12px;
+            }
+            .days-group {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Неделя 2 — Еженедельные тренировки</h1>
+        <div class="days-group">
+            <a href="monday2.html" class="day-btn">Понедельник</a>
+            <a href="wednesday2.html" class="day-btn">Среда</a>
+            <a href="friday2.html" class="day-btn">Пятница</a>
+            <a href="saturday2.html" class="day-btn">Суббота</a>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">&#8962;</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="trainings.html" class="nav-item">
+            <span class="nav-icon">&#128170;</span>
+            <span class="nav-label">Тренировки</span>
+        </a>
+        <a href="food.html" class="nav-item">
+            <span class="nav-icon">&#127828;</span>
+            <span class="nav-label">Питание</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">&#128100;</span>
+            <span class="nav-label">Профиль</span>
+        </a>
+    </nav>
+</body>
+</html>
