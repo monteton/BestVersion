@@ -69,7 +69,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
-            width: 100%;
+            width: %;
             max-width: 100%;
             margin: 0 auto 16px auto;
         }
@@ -78,19 +78,13 @@
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
-            cursor: pointer;
             display: flex;
             flex-direction: column;
-            transition: box-shadow 0.2s, transform 0.2s;
             align-items: stretch;
-        }
-        .video-item:hover {
-            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
-            transform: translateY(-2px) scale(1.03);
         }
         .video-preview {
             width: 100%;
-            aspect-ratio: 9 / 16; /* Вертикальное видео */
+            aspect-ratio: 9 / 16;
             background: #000;
             display: flex;
             align-items: center;
@@ -98,10 +92,10 @@
             overflow: hidden;
             border-radius: 16px 16px 0 0;
         }
-        .video-preview iframe {
+        .video-preview video {
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
             background: #000;
         }
         .video-caption {
@@ -184,45 +178,48 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Разминка</div>
-            </div>
-            <div class="video-item">
-                <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/df/df01/df01bbd1fcac069fe59cefddbe69fe0b/1_Prisedanie_s_rezinkoy.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
                 </div>
                 <div class="video-caption">Приседания</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/7e/7e60/7e60b2ce6851aad416b26f40846de18c/2_SHag_na_meste_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
                 </div>
                 <div class="video-caption">Шаг на месте</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/ee/ee65/ee65e60a56a2495dedab6049d4942f12/3_YAgodichnyiy_mostik_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
                 </div>
                 <div class="video-caption">Ягодичный мостик</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/79/79fb/79fb39552427e76d7350e17f1d687496/4_Razgibanie_ruk_s_gantelyami_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
                 </div>
-                <div class="video-caption">Разгибание рук</div>
+                <div class="video-caption">Разгибание рук с гантелями</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/3b/3b0f/3b0fc5d333fb8107144417e135ab37dd/5_Skruchivanie_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
                 </div>
                 <div class="video-caption">Скручивание</div>
-            </div>
-            <div class="video-item">
-                <div class="video-preview">
-                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Заминка</div>
             </div>
         </div>
     </div>
