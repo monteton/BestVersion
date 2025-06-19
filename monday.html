@@ -69,7 +69,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
-            width: %;
+            width: 100%;
             max-width: 100%;
             margin: 0 auto 16px auto;
         }
@@ -152,6 +152,10 @@
             font-size: 0.91em;
             line-height: 1.1;
         }
+        /* Скрытие кнопки скачивания (если не сработает controlsList) */
+        video::-webkit-media-controls-download-button {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -178,8 +182,8 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/df/df01/df01bbd1fcac069fe59cefddbe69fe0b/1_Prisedanie_s_rezinkoy.mp4" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/df/df01/df01bbd1fcac069fe59cefddbe69fe0b/1_Prisedanie_s_rezinkoy.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -187,8 +191,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/7e/7e60/7e60b2ce6851aad416b26f40846de18c/2_SHag_na_meste_1.mp4" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/7e/7e60/7e60b2ce6851aad416b26f40846de18c/2_SHag_na_meste_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -196,8 +200,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/ee/ee65/ee65e60a56a2495dedab6049d4942f12/3_YAgodichnyiy_mostik_1.mp4" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/ee/ee65/ee65e60a56a2495dedab6049d4942f12/3_YAgodichnyiy_mostik_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -205,8 +209,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/79/79fb/79fb39552427e76d7350e17f1d687496/4_Razgibanie_ruk_s_gantelyami_1.mp4" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/79/79fb/79fb39552427e76d7350e17f1d687496/4_Razgibanie_ruk_s_gantelyami_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -214,8 +218,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/3b/3b0f/3b0fc5d333fb8107144417e135ab37dd/5_Skruchivanie_1.mp4" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/3b/3b0f/3b0fc5d333fb8107144417e135ab37dd/5_Skruchivanie_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -242,5 +246,14 @@
             <span class="nav-label">Профиль</span>
         </a>
     </nav>
+
+    <script>
+        // Возвращаем видео на начало при первом запуске (если использовали #t=0.1)
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.currentTime = 0;
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
