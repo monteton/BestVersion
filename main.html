@@ -3,69 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Гайд по тренировкам</title>
-    <link rel="stylesheet" href="src/styles/main.css">
+    <title>Главная — Тренировки</title>
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* Баннер */
+        .banner {
+            background: #2c3e50;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin: 16px 0;
+            text-align: center;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            width: 100%;
+        }
+        .banner-text {
+            color: #fff;
+            font-size: 1.4em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        /* Модули с картинками, по 2 в ряд */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-bottom: 80px;
+        }
+        .module {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        .module-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        .module-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 4px 0;
+        }
+        .module-description {
+            font-size: 0.9em;
+            color: #444;
+            margin: 0;
+        }
+        /* Нижнее меню — как на monday.html */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 66px;
+            z-index: 100;
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.93em;
+            gap: 2px;
+            transition: color 0.2s;
+            padding: 6px 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-item.active, .nav-item:active {
+            color: #222;
+        }
+        .nav-icon {
+            font-size: 1.34em;
+            line-height: 1;
+        }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
+        }
+        @media (max-width: 360px) {
+            .modules-grid {
+                gap: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header class="banner" style="background-image: url('images/banner1.jpg');">
-            <div class="banner-content">
-                <h1>Что вас ждет </h1>
-                <p>Ваш путь к здоровью и силе начинается здесь</p>
-            </div>
-        </header>
+        <!-- Баннер -->
+        <div class="banner">
+            <div class="banner-text">Вас ждёт</div>
+        </div>
 
-        <main class="content">
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder1.jpg');"></div>
-                <h3>Силовые тренировки</h3>
-                <p>Программы для набора мышечной массы.</p>
-            </section>
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder2.jpg');"></div>
-                <h3>Кардио</h3>
-                <p>Улучшите выносливость и здоровье.</p>
-            </section>
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder3.jpg');"></div>
-                <h3>План питания</h3>
-                <p>Сбалансированные диеты для целей.</p>
-            </section>
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder4.jpg');"></div>
-                <h3>Йога и растяжка</h3>
-                <p>Гибкость и восстановление тела.</p>
-            </section>
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder5.jpg');"></div>
-                <h3>Функциональный тренинг</h3>
-                <p>Упражнения для повседневной жизни.</p>
-            </section>
-            <section class="block">
-                <div class="block-image" style="background-image: url('images/placeholder6.jpg');"></div>
-                <h3>Мотивация</h3>
-                <p>Советы для вашего вдохновения.</p>
-            </section>
-        </main>
+        <!-- Модули по 2 в ряд -->
+        <div class="modules-grid">
+            <div class="module">
+                <img src="images/placeholder1.jpg" alt="Силовые тренировки" class="module-image">
+                <div class="module-title">Силовые тренировки</div>
+                <div class="module-description">Программы для набора мышечной массы.</div>
+            </div>
+            <div class="module">
+                <img src="images/placeholder2.jpg" alt="Кардио" class="module-image">
+                <div class="module-title">Кардио</div>
+                <div class="module-description">Улучшите выносливость и здоровье.</div>
+            </div>
+            <div class="module">
+                <img src="images/placeholder3.jpg" alt="План питания" class="module-image">
+                <div class="module-title">План питания</div>
+                <div class="module-description">Сбалансированные диеты для целей.</div>
+            </div>
+            <div class="module">
+                <img src="images/placeholder4.jpg" alt="Йога и растяжка" class="module-image">
+                <div class="module-title">Йога и растяжка</div>
+                <div class="module-description">Гибкость и восстановление тела.</div>
+            </div>
+            <div class="module">
+                <img src="images/placeholder5.jpg" alt="Функциональный тренинг" class="module-image">
+                <div class="module-title">Функциональный тренинг</div>
+                <div class="module-description">Упражнения для повседневной жизни.</div>
+            </div>
+            <div class="module">
+                <img src="images/placeholder6.jpg" alt="Мотивация" class="module-image">
+                <div class="module-title">Мотивация</div>
+                <div class="module-description">Советы для вашего вдохновения.</div>
+            </div>
+        </div>
     </div>
 
-<nav class="bottom-nav">
-    <a href="index.html" class="nav-item">
-        <span class="nav-icon">&#8962;</span>
-        <span class="nav-label">Главная</span>
-    </a>
-    <a href="trainings.html" class="nav-item">
-        <span class="nav-icon">&#128170;</span>
-        <span class="nav-label">Тренировки</span>
-    </a>
-    <a href="food.html" class="nav-item">
-        <span class="nav-icon">&#127828;</span>
-        <span class="nav-label">Питание</span>
-    </a>
-    <a href="profile.html" class="nav-item">
-        <span class="nav-icon">&#128100;</span>
-        <span class="nav-label">Профиль</span>
-    </a>
-</nav>
-
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">&#8962;</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="trainings.html" class="nav-item">
+            <span class="nav-icon">&#128170;</span>
+            <span class="nav-label">Тренировки</span>
+        </a>
+        <a href="food.html" class="nav-item">
+            <span class="nav-icon">&#127828;</span>
+            <span class="nav-label">Питание</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">&#128100;</span>
+            <span class="nav-label">Профиль</span>
+        </a>
+    </nav>
+</body>
 </html>
