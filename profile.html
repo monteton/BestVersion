@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ваш профиль — Гайд по тренировкам</title>
-    <!-- Подключаем библиотеку для создания изображений -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         body {
             background: #faf9f6;
@@ -14,15 +12,15 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         .container {
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 32px 16px 90px 16px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -34,6 +32,7 @@
             margin-bottom: 20px;
             font-size: 1.8em;
         }
+        /* Инструменты и ресурсы */
         .tools-section {
             background: #fff;
             border-radius: 16px;
@@ -44,35 +43,60 @@
             margin-bottom: 20px;
         }
         .tools-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 12px;
         }
+        .tool-item {
+            position: relative;
+            padding-bottom: 12px;
+        }
+        .tool-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
         .tool-button {
-            background: #2c3e50;
-            color: white;
+            background: transparent;
+            color: #2c3e50;
             border: none;
             border-radius: 12px;
             padding: 14px 10px;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
-            text-align: center;
+            text-align: left;
             text-decoration: none;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100%;
+            gap: 12px;
+            width: 100%;
         }
         .tool-button:hover {
-            background: #1a2635;
+            background: rgba(44,62,80,0.05);
         }
         .tool-icon {
-            font-size: 1.8em;
-            margin-bottom: 8px;
+            font-size: 1.4em;
         }
+        /* Информационный блок */
+        .info-text {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #444;
+        }
+        /* Форма параметров */
         .form-section {
             background: #fff;
             border-radius: 16px;
@@ -122,6 +146,7 @@
         .action-button:hover {
             background: #1a2635;
         }
+        /* Результаты */
         .result-section {
             background: #fff;
             border-radius: 16px;
@@ -131,7 +156,6 @@
             box-sizing: border-box;
             display: none;
             text-align: center;
-            position: relative;
         }
         .celebration {
             font-size: 1.8em;
@@ -161,47 +185,22 @@
         .negative {
             color: #e74c3c;
         }
-        .save-result-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 20px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-        .save-result-btn:hover {
-            background: #2980b9;
-        }
-        .info-text {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-            line-height: 1.5;
-            color: #444;
-        }
+        /* Нижнее меню */
         .bottom-nav {
             position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
+            width: 100%;
             background: #fff;
-            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-around;
             align-items: center;
             height: 66px;
             z-index: 100;
             border-radius: 18px 18px 0 0;
+            padding: 0;
         }
         .nav-item {
             display: flex;
@@ -212,13 +211,22 @@
             font-size: 0.93em;
             gap: 2px;
             transition: color 0.2s;
-            padding: 6px 0;
+            padding: 6px 0 0 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .nav-item.active, .nav-item:active {
             color: #222;
         }
         .nav-icon {
             font-size: 1.34em;
+            line-height: 1;
+        }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
         }
     </style>
 </head>
@@ -226,32 +234,43 @@
     <div class="container">
         <h1>Ваш профиль</h1>
 
+        <!-- Инструменты и ресурсы -->
         <div class="tools-section">
             <h2>Инструменты и ресурсы</h2>
             <div class="tools-grid">
-                <a href="calories.html" class="tool-button">
-                    <div class="tool-icon">🔥</div>
-                    Калькулятор калорий
-                </a>
-                <a href="materials.html" class="tool-button">
-                    <div class="tool-icon">📚</div>
-                    Полезные материалы
-                </a>
-                <a href="selfcare.html" class="tool-button">
-                    <div class="tool-icon">💆</div>
-                    Уход за собой
-                </a>
-                <a href="faq.html" class="tool-button">
-                    <div class="tool-icon">❓</div>
-                    Ответы на вопросы
-                </a>
+                <div class="tool-item">
+                    <a href="calories.html" class="tool-button">
+                        <span class="tool-icon">🔥</span>
+                        <span>Калькулятор калорий</span>
+                    </a>
+                </div>
+                <div class="tool-item">
+                    <a href="materials.html" class="tool-button">
+                        <span class="tool-icon">📚</span>
+                        <span>Полезные материалы</span>
+                    </a>
+                </div>
+                <div class="tool-item">
+                    <a href="selfcare.html" class="tool-button">
+                        <span class="tool-icon">💆</span>
+                        <span>Уход за собой</span>
+                    </a>
+                </div>
+                <div class="tool-item">
+                    <a href="faq.html" class="tool-button">
+                        <span class="tool-icon">❓</span>
+                        <span>Ответы на вопросы</span>
+                    </a>
+                </div>
             </div>
         </div>
 
+        <!-- Пояснение о безопасности данных -->
         <div class="info-text">
-            Ваши данные надёжно сохраняются локально в вашем браузере и доступны только вам. Это обеспечивает конфиденциальность и безопасность, позволяя вам отслеживать прогресс без риска утечки информации. Обратите внимание, что данные хранятся только на этом устройстве и в этом браузере[1].
+            Ваши данные надёжно сохраняются локально в вашем браузере и доступны только вам. Это обеспечивает конфиденциальность и безопасность, позволяя вам отслеживать прогресс без риска утечки информации. Обратите внимание, что данные хранятся только на этом устройстве и в этом браузере. Для начала работы введите начальные параметры и нажмите кнопку «Сохранить начальные данные».
         </div>
 
+        <!-- Начальные параметры -->
         <div class="form-section">
             <h2>Начальные параметры</h2>
             <div class="input-group">
@@ -273,6 +292,7 @@
             <button class="action-button" id="save-start">Сохранить начальные данные</button>
         </div>
 
+        <!-- Текущие параметры -->
         <div class="form-section">
             <h2>Текущие параметры</h2>
             <div class="input-group">
@@ -292,8 +312,10 @@
                 <input type="number" id="current-hips" step="0.1" required>
             </div>
             <button class="action-button" id="calculate">Сравнить и показать прогресс</button>
+            <button class="action-button" id="reset-current">Сбросить текущие данные</button>
         </div>
 
+        <!-- Результаты -->
         <div class="result-section" id="result-section">
             <div class="celebration">🎉 Поздравляем с результатами!</div>
             
@@ -316,12 +338,10 @@
                 <div class="progress-title">Бёдра</div>
                 <div class="progress-value" id="result-hips">-3.4 см</div>
             </div>
-            
-            <button class="save-result-btn" id="save-as-image">Сохранить как изображение</button>
-            <button class="action-button" id="reset">Сбросить все данные</button>
         </div>
     </div>
 
+    <!-- Нижнее меню -->
     <nav class="bottom-nav">
         <a href="index.html" class="nav-item">
             <span class="nav-icon">&#8962;</span>
@@ -417,25 +437,13 @@
             document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Сохранение как изображение
-        document.getElementById('save-as-image').addEventListener('click', function() {
-            html2canvas(document.getElementById('result-section')).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'мой-прогресс.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        });
-
-        // Сброс данных
-        document.getElementById('reset').addEventListener('click', function() {
-            localStorage.removeItem('startParams');
-            document.getElementById('start-weight').value = '';
-            document.getElementById('start-waist').value = '';
-            document.getElementById('start-chest').value = '';
-            document.getElementById('start-hips').value = '';
-            document.getElementById('result-section').style.display = 'none';
-            alert('Все данные сброшены!');
+        // Сброс текущих данных
+        document.getElementById('reset-current').addEventListener('click', function() {
+            document.getElementById('current-weight').value = '';
+            document.getElementById('current-waist').value = '';
+            document.getElementById('current-chest').value = '';
+            document.getElementById('current-hips').value = '';
+            alert('Текущие данные сброшены!');
         });
     </script>
 </body>
