@@ -78,34 +78,31 @@
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
+            transition: box-shadow 0.2s, transform 0.2s;
             align-items: stretch;
         }
-        .preview-link {
-            position: relative;
-            display: block;
+        .video-item:hover {
+            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .video-preview {
             width: 100%;
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 9 / 16; /* Вертикальное видео */
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             border-radius: 16px 16px 0 0;
-            background: #000;
         }
-        .preview-img {
+        .video-preview iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .play-btn {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.6em;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            pointer-events: none;
+            border: none;
+            background: #000;
         }
         .video-caption {
             padding: 12px 8px;
@@ -186,39 +183,46 @@
         </div>
         <div class="videos-grid">
             <div class="video-item">
-                <a href="https://t.me/Vitrina_reels/415?t=5" target="_blank" class="preview-link">
-                    <img src="previews/preview1.jpg" alt="Видео 1" class="preview-img">
-                    <span class="play-btn">▶️</span>
-                </a>
-                <div class="video-caption">Видео 1</div>
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Разминка</div>
             </div>
             <div class="video-item">
-                <a href="https://t.me/Vitrina_reels/415?t=5" target="_blank" class="preview-link">
-                    <img src="previews/preview2.jpg" alt="Видео 2" class="preview-img">
-                    <span class="play-btn">▶️</span>
-                </a>
-                <div class="video-caption">Видео 2</div>
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Приседания</div>
             </div>
             <div class="video-item">
-                <a href="https://t.me/Vitrina_reels/415?t=5" target="_blank" class="preview-link">
-                    <img src="previews/preview3.jpg" alt="Видео 3" class="preview-img">
-                    <span class="play-btn">▶️</span>
-                </a>
-                <div class="video-caption">Видео 3</div>
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Шаг на месте</div>
             </div>
             <div class="video-item">
-                <a href="https://t.me/Vitrina_reels/415?t=5" target="_blank" class="preview-link">
-                    <img src="previews/preview4.jpg" alt="Видео 4" class="preview-img">
-                    <span class="play-btn">▶️</span>
-                </a>
-                <div class="video-caption">Видео 4</div>
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Ягодичный мостик</div>
             </div>
             <div class="video-item">
-                <a href="https://t.me/Vitrina_reels/415?t=5" target="_blank" class="preview-link">
-                    <img src="previews/preview5.jpg" alt="Видео 5" class="preview-img">
-                    <span class="play-btn">▶️</span>
-                </a>
-                <div class="video-caption">Видео 5</div>
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Разгибание рук</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Скручивание</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <iframe src="https://drive.google.com/file/d/1b_tGywJMA0XkvV3jC_ARgLUDYn6GZ-5z/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Заминка</div>
             </div>
         </div>
     </div>
