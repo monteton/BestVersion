@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разминка/Заминка</title>
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px 16px 90px 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.5em;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 16px 12px;
+            font-size: 1em;
+            color: #222;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .video-caption h3 {
+            margin: 0 0 4px 0;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .video-caption p {
+            margin: 0;
+            font-size: 0.98em;
+            color: #444;
+        }
+        /* Нижнее меню */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 66px;
+            z-index: 100;
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.93em;
+            gap: 2px;
+            transition: color 0.2s;
+            padding: 6px 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-item.active, .nav-item:active {
+            color: #222;
+        }
+        .nav-icon {
+            font-size: 1.34em;
+            line-height: 1;
+        }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Разминка/Заминка</h1>
+        <div class="videos-grid">
+            <!-- Разминка -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/01/0187/0187d88d6ea73a8ea14e38f918c1a6e8/IMG_2144__2_.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <h3>Разминка</h3>
+                    <p>Разминку перед каждым упражнением делать обязательно!!!</p>
+                </div>
+            </div>
+            <!-- МФР -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/44/440c/440cc02d4955562e130a92c2f9eab8f3/IMG_1554.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <h3>МФР</h3>
+                </div>
+            </div>
+            <!-- Мобильность тазобедренного сустава 1 -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/29/299d/299dc8c02629f64a0d17cb5df2bbebcf/IMG_1537.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <h3>Мобильность тазобедренного сустава 1</h3>
+                </div>
+            </div>
+            <!-- Мобильность тазобедренного сустава 2 -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/48/48bb/48bb953334f1da421987c8f8046ebc81/IMG_1538.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <h3>Мобильность тазобедренного сустава 2</h3>
+                </div>
+            </div>
+            <!-- Растяжка -->
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/ad/adce/adcedd8b63b924fc6fe9da9d7943e1e7/Timeline_1_1.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    <h3>Растяжка</h3>
+                    <p>
+                        Тренировка с Екатериной Людвиг — тренером с 2015 года и создателем фитнес студии для девушек Bali hall.
+                    </p>
+                    <p>
+                        Обожает спорт и растяжку за возможность сохранить молодость своему телу, суставам и связкам, а также избавить от ряда современных проблем со спиной и всем опорно-двигательным аппаратом. А ещё растяжка отлично снимает нервное напряжение, вырабатывает гормоны — нейромедиаторы, которые улучшают настроение, приносят радость и удовлетворение.
+                    </p>
+                    <p>
+                        С ней вы почувствуете, что спорт — это не всегда выматывающие упражнения, от которых вся одежда мокрая. Спорт может быть спокойным, расслабляющим, приносящим силы, а не усталость.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">&#8962;</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="trainings.html" class="nav-item">
+            <span class="nav-icon">&#128170;</span>
+            <span class="nav-label">Тренировки</span>
+        </a>
+        <a href="food.html" class="nav-item">
+            <span class="nav-icon">&#127828;</span>
+            <span class="nav-label">Питание</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">&#128100;</span>
+            <span class="nav-label">Профиль</span>
+        </a>
+    </nav>
+
+    <script>
+        // Возвращаем видео на начало при первом запуске (чтобы не было задержки на кадре из #t=0.1)
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.currentTime = 0;
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
