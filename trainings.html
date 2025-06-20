@@ -4,34 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тренировки</title>
-    <link rel="stylesheet" href="src/styles/main.css">
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px 16px 90px 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .banner {
+            background: #2c3e50;
+            border-radius: 16px;
+            padding: 22px 16px 18px 16px;
+            margin-bottom: 18px;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .banner-title {
+            color: #fff;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            text-align: center;
+        }
+        .banner-desc {
+            color: #fff;
+            font-size: 1em;
+            text-align: center;
+            font-weight: 400;
+        }
+        /* Кнопки */
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .week-item, .warmup-btn {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #222;
+            font-size: 1.12em;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+            text-align: center;
+            margin: 0;
+        }
+        .week-item:hover, .warmup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
+            background: #f2f0ff;
+            color: #6c4dd6;
+        }
+        .warmup-btn {
+            margin-bottom: 16px;
+            margin-top: 0;
+        }
+        /* Нижнее меню */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 66px;
+            z-index: 100;
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.93em;
+            gap: 2px;
+            transition: color 0.2s;
+            padding: 6px 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-item.active, .nav-item:active {
+            color: #222;
+        }
+        .nav-icon {
+            font-size: 1.34em;
+            line-height: 1;
+        }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header class="banner" style="background-image: url('images/banner-trainings.jpg');">
-            <div class="banner-content">
-                <h1>Тренировки</h1>
-                <p>Выберите неделю или тренировку в зале</p>
-            </div>
-        </header>
-
-        <main class="content trainings-content">
-            <a href="trainings-week1.html" class="week-btn">
-                <span>Неделя 1</span>
-            </a>
-            <a href="trainings-week2.html" class="week-btn">
-                <span>Неделя 2</span>
-            </a>
-            <a href="trainings-week3.html" class="week-btn">
-                <span>Неделя 3</span>
-            </a>
-            <a href="trainings-week4.html" class="week-btn">
-                <span>Неделя 4</span>
-            </a>
-            <a href="trainings-gym.html" class="week-btn gym-btn">
-                <span>Тренировки в зале</span>
-            </a>
-        </main>
+        <!-- Баннер -->
+        <div class="banner">
+            <div class="banner-title">Тренировки</div>
+            <div class="banner-desc">Выберите неделю и приступайте к занятиям</div>
+        </div>
+        <div class="weeks-grid">
+            <!-- Кнопка разминка/заминка — абсолютно такая же, как остальные -->
+            <a href="razminka.html" class="warmup-btn">Разминка/Заминка</a>
+            <a href="week1.html" class="week-item">Неделя 1</a>
+            <a href="week2.html" class="week-item">Неделя 2</a>
+            <a href="week3.html" class="week-item">Неделя 3</a>
+            <a href="week4.html" class="week-item">Неделя 4</a>
+            <a href="hall.html" class="week-item">Тренировки в зале</a>
+        </div>
     </div>
 
     <nav class="bottom-nav">
@@ -52,7 +167,5 @@
             <span class="nav-label">Профиль</span>
         </a>
     </nav>
-
-    <script src="src/scripts/main.js"></script>
 </body>
 </html>
