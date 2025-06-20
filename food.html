@@ -112,6 +112,52 @@
             margin: 10px auto;
             display: block;
         }
+        /* Видео */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            margin: 16px 0;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 12px 8px;
+            font-size: 1rem;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
         /* Нижнее меню */
         .bottom-nav {
             position: fixed;
@@ -169,12 +215,44 @@
         
         <!-- Кнопки калорийности -->
         <div class="calorie-grid">
-            <button class="calorie-btn" onclick="openPdf('pdfs/1300call.pdf')">1300 ккал</button>
-            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500 ккал</button>
-            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu1500-1600_kaloriy.pdf')">1500-1600 ккал</button>
-            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1600-1700_kaloriy.pdf')">1600-1700 ккал</button>
-            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1700-1800_kaloriy.pdf')">1700-1800 ккал</button>
-            <button class="calorie-btn" onclick="openPdf('pdfs/postnoe.pdf')">Постное меню</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/1300call.pdf')">1300 ккал</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500 ккал</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Menyu1500-1600_kaloriy.pdf')">1500-1600 ккал</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1600-1700_kaloriy.pdf')">1600-1700 ккал</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1700-1800_kaloriy.pdf')">1700-1800 ккал</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/postnoe.pdf')">Постное меню</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Pitanie_chast__1.pdf')">Питание часть 1</button>
+    <button class="calorie-btn" onclick="openPdf('pdfs/Pitanie_chast__2.pdf')">Питание часть 2</button>
+</div>
+        <!-- Видео -->
+        <div class="videos-grid">
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/a5/a519/a5196261f3cec9d980791446a8720137/urok1_1.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Индивидуальный подсчет калорийности</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/47/4714/4714b0f1298aca36a961147cd66ff21b/Urok_2.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Индивидуальный разбор КБЖУ</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/86/86a9/86a9725b373d1c7041f76e628e5ea154/IMG_1518.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Составляем рацион под свои запросы и цели</div>
+            </div>
         </div>
         
         <!-- PDF контейнер -->
