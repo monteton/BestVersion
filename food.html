@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Питание — Гайд по тренировкам</title>
+    <title>Питание</title>
     <style>
         body {
             background: #faf9f6;
@@ -20,7 +20,7 @@
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 16px 16px 90px 16px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -28,88 +28,89 @@
         }
         h1 {
             text-align: center;
-            margin-bottom: 24px;
             color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.8em;
         }
-        .buttons-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .calorie-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
             width: 100%;
-            max-width: 100%;
+            margin-bottom: 20px;
         }
-        .pdf-btn {
-            background: #2c3e50;
-            color: white;
-            border: none;
+        .calorie-btn, .menu-btn {
+            background: #fff;
             border-radius: 16px;
-            padding: 14px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #222;
             font-size: 1.1em;
             font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
             cursor: pointer;
             text-align: center;
-            transition: background 0.3s, transform 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .pdf-btn:hover {
-            background: #1a2635;
+        .calorie-btn:hover, .menu-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
         }
-        /* Модальное окно для PDF */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active {
-            display: flex;
-        }
-        .modal-content {
-            position: relative;
-            width: 90vw;
-            max-width: 600px;
-            height: 80vh;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-        }
-        .modal-header {
-            padding: 12px 16px;
-            background: #2c3e50;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1em;
-            border-radius: 12px 12px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-close {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.5em;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-body {
-            flex: 1;
-            overflow: hidden;
-        }
-        .modal-body iframe {
+        .menu-btn {
             width: 100%;
-            height: 100%;
+            margin-bottom: 16px;
+        }
+        #pdf-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 16px 0;
+            display: none;
+        }
+        #pdf-canvas {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            background: #fff;
+        }
+        .pdf-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .pdf-controls button {
+            background: #6c4dd6;
+            color: white;
             border: none;
-            border-radius: 0 0 12px 12px;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .pdf-controls button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #page-info {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #222;
+        }
+        .close-pdf {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px auto;
+            display: block;
         }
         /* Нижнее меню */
         .bottom-nav {
@@ -118,13 +119,16 @@
             right: 0;
             bottom: 0;
             background: #fff;
-            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
             display: flex;
             justify-content: space-around;
             align-items: center;
             height: 66px;
             z-index: 100;
             border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
         }
         .nav-item {
             display: flex;
@@ -136,46 +140,45 @@
             gap: 2px;
             transition: color 0.2s;
             padding: 6px 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .nav-item.active, .nav-item:active {
             color: #222;
         }
         .nav-icon {
             font-size: 1.34em;
+            line-height: 1;
         }
-        @media (max-width: 500px) {
-            .container {
-                padding: 12px;
-            }
-            .buttons-group {
-                gap: 10px;
-            }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Питание</h1>
-        <div class="buttons-group">
-            <button class="pdf-btn" data-pdf="1300cal.pdf">1300 ккал</button>
-            <button class="pdf-btn" data-pdf="1400cal.pdf">1400 ккал</button>
-            <button class="pdf-btn" data-pdf="1500cal.pdf">1500 ккал</button>
-            <button class="pdf-btn" data-pdf="1600cal.pdf">1600 ккал</button>
-            <button class="pdf-btn" data-pdf="1700cal.pdf">1700 ккал</button>
-            <button class="pdf-btn" data-pdf="1800cal.pdf">1800 ккал</button>
-            <button class="pdf-btn" data-pdf="fasting-menu.pdf">Постное меню</button>
+        
+        <div class="calorie-grid">
+            <button class="calorie-btn" onclick="openPdf('pdfs/1300call.pdf')">1300 ккал</button>
+            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500 ккал</button>
+            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu1500-1600_kaloriy.pdf')">1500-1600 ккал</button>
+            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1600-1700_kaloriy.pdf')">1600-1700 ккал</button>
+            <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1700-1800_kaloriy.pdf')">1700-1800 ккал</button>
+            <button class="calorie-btn" onclick="openPdf('pdfs/postnoe.pdf')">Постное меню</button>
         </div>
-    </div>
-
-    <div class="modal" id="pdfModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span id="modalTitle">Просмотр меню</span>
-                <button class="modal-close" id="modalCloseBtn">&times;</button>
+        
+        <div id="pdf-container">
+            <button class="close-pdf" onclick="closePdf()">Закрыть PDF</button>
+            <canvas id="pdf-canvas"></canvas>
+            <div class="pdf-controls">
+                <button id="prev-page">Предыдущая</button>
+                <button id="next-page">Следующая</button>
             </div>
-            <div class="modal-body">
-                <iframe id="pdfFrame" src="" allowfullscreen></iframe>
-            </div>
+            <div id="page-info"></div>
         </div>
     </div>
 
@@ -198,33 +201,84 @@
         </a>
     </nav>
 
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        const pdfButtons = document.querySelectorAll('.pdf-btn');
-        const modal = document.getElementById('pdfModal');
-        const pdfFrame = document.getElementById('pdfFrame');
-        const modalCloseBtn = document.getElementById('modalCloseBtn');
-        const modalTitle = document.getElementById('modalTitle');
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        pdfButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const pdfFile = button.getAttribute('data-pdf');
-                const label = button.textContent;
-                pdfFrame.src = `web/viewer.html?file=../pdfs/${pdfFile}`;
-                modalTitle.textContent = label;
-                modal.classList.add('active');
+        const pdfContainer = document.getElementById('pdf-container');
+        const canvas = document.getElementById('pdf-canvas');
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+        const pageInfo = document.getElementById('page-info');
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        const scale = 1.5;
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                const renderContext = {
+                    canvasContext: canvas.getContext('2d'),
+                    viewport: viewport
+                };
+                const renderTask = page.render(renderContext);
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
             });
-        });
+            pageInfo.textContent = `Страница ${num} из ${pdfDoc.numPages}`;
+            prevBtn.disabled = num <= 1;
+            nextBtn.disabled = num >= pdfDoc.numPages;
+        }
 
-        modalCloseBtn.addEventListener('click', () => {
-            pdfFrame.src = '';
-            modal.classList.remove('active');
-        });
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                pdfFrame.src = '';
-                modal.classList.remove('active');
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
             }
+        }
+
+        function openPdf(pdfUrl) {
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                pdfContainer.style.display = 'block';
+                pageNum = 1;
+                renderPage(pageNum);
+                pdfContainer.scrollIntoView({ behavior: 'smooth' });
+            }).catch(function(error) {
+                alert('Ошибка загрузки PDF: ' + error.message);
+            });
+        }
+
+        function closePdf() {
+            pdfContainer.style.display = 'none';
+            pdfDoc = null;
+            pageNum = 1;
+        }
+
+        prevBtn.addEventListener('click', function() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        });
+
+        nextBtn.addEventListener('click', function() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
         });
     </script>
 </body>
