@@ -50,7 +50,7 @@
             text-align: center;
             font-weight: 400;
         }
-        /* Кнопки */
+        /* Кнопки — это ссылки */
         .weeks-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -73,17 +73,12 @@
             font-weight: 600;
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
             text-align: center;
-            margin: 0;
         }
         .week-item:hover, .warmup-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(44,62,80,0.13);
             background: #f2f0ff;
             color: #6c4dd6;
-        }
-        .warmup-btn {
-            margin-bottom: 16px;
-            margin-top: 0;
         }
         /* Нижнее меню */
         .bottom-nav {
@@ -139,14 +134,14 @@
             <div class="banner-desc">Выберите неделю и приступайте к занятиям</div>
         </div>
         <div class="weeks-grid">
-            <!-- Кнопка разминка/заминка — абсолютно такая же, как остальные -->
-            <a href="razminka.html" class="warmup-btn">Разминка/Заминка</a>
-            <a href="week1.html" class="week-item">Неделя 1</a>
-            <a href="week2.html" class="week-item">Неделя 2</a>
-            <a href="week3.html" class="week-item">Неделя 3</a>
-            <a href="week4.html" class="week-item">Неделя 4</a>
-            <a href="hall.html" class="week-item">Тренировки в зале</a>
-        </div>
+    <a href="razminka.html" class="week-item">Разминка/Заминка</a>
+    <a href="trainings-week1.html" class="week-item">Неделя 1</a>
+    <a href="trainings-week2.html" class="week-item">Неделя 2</a>
+    <a href="trainings-week3.html" class="week-item">Неделя 3</a>
+    <a href="trainings-week4.html" class="week-item">Неделя 4</a>
+    <a href="trainings-gym.html" class="week-item">Тренировки в зале</a>
+</div>
+
     </div>
 
     <nav class="bottom-nav">
