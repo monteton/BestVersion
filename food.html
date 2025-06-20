@@ -39,7 +39,7 @@
             width: 100%;
             margin-bottom: 20px;
         }
-        .calorie-btn, .menu-btn {
+        .calorie-btn, .menu-btn, .calorazh-btn {
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -56,11 +56,11 @@
             cursor: pointer;
             text-align: center;
         }
-        .calorie-btn:hover, .menu-btn:hover {
+        .calorie-btn:hover, .menu-btn:hover, .calorazh-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(44,62,80,0.13);
         }
-        .menu-btn {
+        .menu-btn, .calorazh-btn {
             width: 100%;
             margin-bottom: 16px;
         }
@@ -162,6 +162,12 @@
     <div class="container">
         <h1>Питание</h1>
         
+        <!-- Кнопка на calorazh.ru -->
+        <a href="https://calorazh.ru/" target="_blank" class="calorazh-btn">
+            Калькулятор калорий (Calorazh.ru)
+        </a>
+        
+        <!-- Кнопки калорийности -->
         <div class="calorie-grid">
             <button class="calorie-btn" onclick="openPdf('pdfs/1300call.pdf')">1300 ккал</button>
             <button class="calorie-btn" onclick="openPdf('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500 ккал</button>
@@ -171,6 +177,7 @@
             <button class="calorie-btn" onclick="openPdf('pdfs/postnoe.pdf')">Постное меню</button>
         </div>
         
+        <!-- PDF контейнер -->
         <div id="pdf-container">
             <button class="close-pdf" onclick="closePdf()">Закрыть PDF</button>
             <canvas id="pdf-canvas"></canvas>
