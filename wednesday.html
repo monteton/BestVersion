@@ -117,7 +117,7 @@
             justify-content: center;
             font-weight: 500;
         }
-        /* Нижнее меню */
+        /* Нижнее меню — фиксированное, не сужается */
         .bottom-nav {
             position: fixed;
             left: 0;
@@ -133,6 +133,7 @@
             border-radius: 18px 18px 0 0;
             width: 100%;
             max-width: 420px;
+            margin: 0 auto;
         }
         .nav-item {
             display: flex;
@@ -186,8 +187,8 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/00/0064/0064dbf6e32439fa1f8b9e420dc9e2cc/1_Uprajnenie_stul_chik.mp4" type="video/mp4">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/00/0064/0064dbf6e32439fa1f8b9e420dc9e2cc/1_Uprajnenie_stul_chik.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -195,8 +196,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/cb/cba5/cba5f635af824189a3ec045dcc4d0cb2/2_Uprajnenie_Otvedenie_bedra_iz_bokovoy_planki_1.mp4" type="video/mp4">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/cb/cba5/cba5f635af824189a3ec045dcc4d0cb2/2_Uprajnenie_Otvedenie_bedra_iz_bokovoy_planki_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -204,8 +205,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/23/230e/230ea34e990c92f124d8209aee7b68d4/3_prajnenie_gorizontal_naya_tyaga_1.mp4" type="video/mp4">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/23/230e/230ea34e990c92f124d8209aee7b68d4/3_prajnenie_gorizontal_naya_tyaga_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -213,8 +214,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/2c/2c70/2c70bba063e9a6f3aa4992728eb8b7aa/4_Uprajnenie_Imitatsiya_vertikal_noy_tyagi__giperekstenziya__1.mp4" type="video/mp4">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/2c/2c70/2c70bba063e9a6f3aa4992728eb8b7aa/4_Uprajnenie_Imitatsiya_vertikal_noy_tyagi__giperekstenziya__1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -222,12 +223,25 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
-                        <source src="https://storage2.bothelp.io/myuppy/3b/3b71/3b718d66f2a12fe400546dd030653c25/5_Uprajnenie_Podtyagivanie_koleney_k_grudi_po_ocheredi.mp4" type="video/mp4">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/3b/3b71/3b718d66f2a12fe400546dd030653c25/5_Uprajnenie_Podtyagivanie_koleney_k_grudi_po_ocheredi.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
                 <div class="video-caption">Подтягивание коленей</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/3d/3de5/3de5a04ab31a21464829149c0d72f9db/Dobavochnaya_4_trenirovka_v_pervuyu_nedelyu.mp4#t=0.1" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">
+                    Добавочная тренировка<br>
+                    Делаем все упражнения по очереди, повторяем 4-5 кругов<br>
+                    Отдых между кругами 60 секунд
+                </div>
             </div>
         </div>
     </div>
@@ -250,5 +264,14 @@
             <span class="nav-label">Профиль</span>
         </a>
     </nav>
+
+    <script>
+        // Возвращаем видео на начало при первом запуске (чтобы не было задержки на кадре из #t=0.1)
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.currentTime = 0;
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
