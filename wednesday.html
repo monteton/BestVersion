@@ -1,322 +1,254 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Среда — Неделя 1</title>
-  <link rel="stylesheet" href="../src/styles/main.css" />
-  <style>
-    body {
-      background: #faf9f6;
-      color: #222;
-      font-family: 'Inter', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .container {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      padding: 16px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .instruction-block {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      padding: 20px 16px 18px 16px;
-      margin-bottom: 20px;
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .instruction-block h2 {
-      margin: 0 0 8px 0;
-      font-size: 1.5em;
-      font-weight: 700;
-      color: #2c3e50;
-    }
-    .instruction-block a {
-      text-decoration: underline;
-      color: #2c3e50;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: inline-block;
-    }
-    .exercise-list {
-      width: 100%;
-      margin: 0 0 14px 0;
-      padding: 0;
-      list-style: decimal inside;
-      font-size: 1.1em;
-      font-weight: 600;
-      line-height: 1.4;
-      color: #222;
-    }
-    .exercise-list li {
-      margin-bottom: 8px;
-    }
-    .rest, .note {
-      font-size: 1em;
-      font-weight: 600;
-      color: #2c3e50;
-      margin-bottom: 8px;
-      text-decoration: underline;
-    }
-    .videos-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto 16px auto;
-    }
-    .video-item {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      transition: box-shadow 0.2s, transform 0.2s;
-      align-items: stretch;
-    }
-    .video-item:hover {
-      box-shadow: 0 6px 16px rgba(44,62,80,0.13);
-      transform: translateY(-2px) scale(1.03);
-    }
-    .video-preview {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .video-preview video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
-      border: none;
-      background: #000;
-    }
-    .video-caption {
-      padding: 12px 8px;
-      font-size: 1rem;
-      color: #222;
-      text-align: center;
-      background: #faf9f6;
-      border-radius: 0 0 16px 16px;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 500;
-    }
-    /* Модальное окно */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      position: relative;
-      width: 90vw;
-      max-width: 420px;
-      aspect-ratio: 9 / 16;
-      background: #000;
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #000;
-    }
-    .modal-close {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255,255,255,0.8);
-      border: none;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      line-height: 1;
-      text-align: center;
-      color: #333;
-      z-index: 10;
-    }
-    /* Нижнее меню */
-    .bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #fff;
-      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 66px;
-      z-index: 100;
-      border-radius: 18px 18px 0 0;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: #888;
-      font-size: 0.93em;
-      gap: 2px;
-      transition: color 0.2s;
-      padding: 6px 0;
-    }
-    .nav-item.active, .nav-item:active {
-      color: #222;
-    }
-    .nav-icon {
-      font-size: 1.34em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Среда — Неделя 1</title>
+    <style>
+        body {
+            background: #faf9f6;
+            color: #222;
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 16px 16px 90px 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .instruction-block {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            font-size: 1.8em;
+        }
+        .exercise-list {
+            width: 100%;
+            margin: 0 0 14px 0;
+            padding: 0;
+            list-style: decimal inside;
+            font-size: 1em;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .exercise-list li {
+            margin-bottom: 8px;
+            text-align: left;
+        }
+        .rest, .note {
+            margin: 0 0 10px 0;
+            font-size: 0.98em;
+            color: #444;
+            text-align: center;
+            text-decoration: underline;
+        }
+        .videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .video-item {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s, transform 0.2s;
+            align-items: stretch;
+        }
+        .video-item:hover {
+            box-shadow: 0 6px 16px rgba(44,62,80,0.13);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .video-preview {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+        }
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-caption {
+            padding: 12px 8px;
+            font-size: 1rem;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 16px 16px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        /* Нижнее меню */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 66px;
+            z-index: 100;
+            border-radius: 18px 18px 0 0;
+            width: 100%;
+            max-width: 420px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.93em;
+            gap: 2px;
+            transition: color 0.2s;
+            padding: 6px 0;
+            min-width: 54px;
+            max-width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-item.active, .nav-item:active {
+            color: #222;
+        }
+        .nav-icon {
+            font-size: 1.34em;
+            line-height: 1;
+        }
+        .nav-label {
+            font-size: 0.91em;
+            line-height: 1.1;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="instruction-block">
-      <h2>Неделя 1</h2>
-      <h3>Тренировка 2</h3>
-      <a href="#" class="important">Сделайте разминку обязательно</a>
-      <ol class="exercise-list">
-        <li>Стульчик 30-60 секунд / 4 подхода</li>
-        <li>Отведение бедра из положения боковой планки 12 раз на каждую сторону / 3 подхода</li>
-        <li>Горизонтальная тяга 12-15 повторений на каждую сторону / 3 подхода</li>
-        <li>Имитация вертикальной тяги (гиперэкстензия) 15-20 повторений / 3 подхода</li>
-        <li>Подтягивание коленей к груди 20 раз / 3 подхода</li>
-      </ol>
-      <div class="rest">Отдых между подходами 60 секунд<br>Отдых между упражнениями до двух минут</div>
-      <div class="note">После тренировки сделать заминку-растяжку.</div>
+    <div class="container">
+        <h1>Среда — Неделя 1</h1>
+        <div class="instruction-block">
+            <h2>Тренировка 2</h2>
+            <div style="font-weight: 600; margin-bottom: 10px;">Сделайте разминку обязательно</div>
+            <ol class="exercise-list">
+                <li>Стульчик 30-60 секунд / 4 подхода</li>
+                <li>Отведение бедра из положения боковой планки 12 раз на каждую сторону / 3 подхода</li>
+                <li>Горизонтальная тяга 12-15 повторений на каждую сторону / 3 подхода</li>
+                <li>Имитация вертикальной тяги (гиперэкстензия) 15-20 повторений / 3 подхода</li>
+                <li>Подтягивание коленей к груди 20 раз / 3 подхода</li>
+            </ol>
+            <div class="rest">
+                Отдых между подходами 60 секунд<br>
+                Отдых между упражнениями до двух минут
+            </div>
+            <div class="note">
+                После тренировки сделать заминку-растяжку.
+            </div>
+        </div>
+        <div class="videos-grid">
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/00/0064/0064dbf6e32439fa1f8b9e420dc9e2cc/1_Uprajnenie_stul_chik.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Стульчик</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/cb/cba5/cba5f635af824189a3ec045dcc4d0cb2/2_Uprajnenie_Otvedenie_bedra_iz_bokovoy_planki_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Отведение бедра</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/23/230e/230ea34e990c92f124d8209aee7b68d4/3_prajnenie_gorizontal_naya_tyaga_1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Горизонтальная тяга</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/2c/2c70/2c70bba063e9a6f3aa4992728eb8b7aa/4_Uprajnenie_Imitatsiya_vertikal_noy_tyagi__giperekstenziya__1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Имитация вертикальной тяги</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls width="100%" style="aspect-ratio: 9 / 16;">
+                        <source src="https://storage2.bothelp.io/myuppy/3b/3b71/3b718d66f2a12fe400546dd030653c25/5_Uprajnenie_Podtyagivanie_koleney_k_grudi_po_ocheredi.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-caption">Подтягивание коленей</div>
+            </div>
+        </div>
     </div>
-    <div class="videos-grid">
-      <div class="video-item" data-video-src="videos/video8.mp4">
-        <div class="video-preview">
-          <video src="videos/video8.mp4" muted preload="metadata"></video>
-        </div>
-        <div class="video-caption">Стульчик</div>
-      </div>
-      <div class="video-item" data-video-src="videos/video9.mp4">
-        <div class="video-preview">
-          <video src="videos/video9.mp4" muted preload="metadata"></video>
-        </div>
-        <div class="video-caption">Отведение бедра</div>
-      </div>
-      <div class="video-item" data-video-src="videos/video10.mp4">
-        <div class="video-preview">
-          <video src="videos/video10.mp4" muted preload="metadata"></video>
-        </div>
-        <div class="video-caption">Горизонтальная тяга</div>
-      </div>
-      <div class="video-item" data-video-src="videos/video11.mp4">
-        <div class="video-preview">
-          <video src="videos/video11.mp4" muted preload="metadata"></video>
-        </div>
-        <div class="video-caption">Имитация вертикальной тяги</div>
-      </div>
-      <div class="video-item" data-video-src="videos/video12.mp4">
-        <div class="video-preview">
-          <video src="videos/video12.mp4" muted preload="metadata"></video>
-        </div>
-        <div class="video-caption">Подтягивание коленей</div>
-      </div>
-    
-      </div>
-    </div>
-  </div>
 
-  <!-- Модальное окно для видео -->
-  <div class="modal" id="videoModal">
-    <div class="modal-content">
-      <button class="modal-close" id="modalCloseBtn">&times;</button>
-      <video id="modalVideo" controls></video>
-    </div>
-  </div>
-
-  <nav class="bottom-nav">
-    <a href="../index.html" class="nav-item">
-      <span class="nav-icon">&#8962;</span>
-      <span class="nav-label">Главная</span>
-    </a>
-    <a href="../trainings.html" class="nav-item">
-      <span class="nav-icon">&#128170;</span>
-      <span class="nav-label">Тренировки</span>
-    </a>
-    <a href="../food.html" class="nav-item">
-      <span class="nav-icon">&#127828;</span>
-      <span class="nav-label">Питание</span>
-    </a>
-    <a href="../profile.html" class="nav-item">
-      <span class="nav-icon">&#128100;</span>
-      <span class="nav-label">Профиль</span>
-    </a>
-  </nav>
-
-  <script>
-    const videoItems = document.querySelectorAll('.video-item');
-    const modal = document.getElementById('videoModal');
-    const modalVideo = document.getElementById('modalVideo');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-
-    videoItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const src = item.getAttribute('data-video-src');
-        modalVideo.src = src;
-        modal.classList.add('active');
-        modalVideo.play();
-      });
-    });
-
-    modalCloseBtn.addEventListener('click', () => {
-      modalVideo.pause();
-      modalVideo.src = '';
-      modal.classList.remove('active');
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modalVideo.pause();
-        modalVideo.src = '';
-        modal.classList.remove('active');
-      }
-    });
-  </script>
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">&#8962;</span>
+            <span class="nav-label">Главная</span>
+        </a>
+        <a href="trainings.html" class="nav-item">
+            <span class="nav-icon">&#128170;</span>
+            <span class="nav-label">Тренировки</span>
+        </a>
+        <a href="food.html" class="nav-item">
+            <span class="nav-icon">&#127828;</span>
+            <span class="nav-label">Питание</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">&#128100;</span>
+            <span class="nav-label">Профиль</span>
+        </a>
+    </nav>
 </body>
 </html>
