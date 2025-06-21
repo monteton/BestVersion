@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Среда — Неделя 3</title>
+    <title>Неделя 4 — Тренировка 12</title>
     <style>
         body {
             background: #faf9f6;
@@ -11,36 +11,28 @@
             font-family: 'Inter', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .container {
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px 16px 90px 16px;
+            padding: 18px 12px 90px 12px;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 16px 0;
+            font-size: 1.5em;
         }
         .instruction-block {
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 20px 16px;
-            margin-bottom: 20px;
+            padding: 18px 14px 12px 14px;
+            margin-bottom: 18px;
             width: 100%;
             box-sizing: border-box;
-            text-align: left;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin: 0 0 20px 0;
-            font-size: 1.5em;
         }
         .instruction-block h2 {
             text-align: center;
@@ -48,38 +40,30 @@
             margin: 0 0 10px 0;
             font-size: 1.1em;
             font-weight: 600;
-        }
-        .important {
-            text-align: center;
-            font-weight: 600;
-            margin: 10px 0 12px 0;
             text-decoration: underline;
         }
         .exercise-list {
-            margin: 0 0 16px 0;
+            margin: 0 0 14px 0;
             padding: 0 0 0 18px;
             font-size: 1em;
             font-weight: 600;
             line-height: 1.6;
         }
-        .details {
-            font-size: 0.98em;
-            margin: 10px 0;
-            text-align: center;
-        }
-        .note {
+        .details, .note {
             font-size: 0.98em;
             color: #444;
             text-align: center;
-            text-decoration: underline;
             margin-top: 10px;
+        }
+        .note {
+            text-decoration: underline;
+            margin-top: 12px;
         }
         .videos-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
             width: 100%;
-            max-width: 100%;
             margin: 0 auto 16px auto;
         }
         .video-item {
@@ -100,21 +84,23 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 16px 16px 0 0;
+            position: relative;
         }
         .video-preview video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             background: #000;
+            display: block;
         }
         .video-caption {
-            padding: 12px 8px;
-            font-size: 1rem;
+            padding: 14px 10px;
+            font-size: 1em;
             color: #222;
             text-align: center;
             background: #faf9f6;
             border-radius: 0 0 16px 16px;
-            min-height: 48px;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -168,19 +154,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>Неделя 3<br>Тренировка 8</h1>
+        <h1>Неделя 4<br>Тренировка 12</h1>
         <div class="instruction-block">
-            <h2><u>Сделайте разминку обязательно</u></h2>
+            <h2>Сделайте разминку обязательно</h2>
             <ol class="exercise-list">
-                <li>Стульчик 30-60 секунд / 4 подхода</li>
-                <li>Мобильность плечевого сустава 15-20 раз / 3 подхода</li>
-                <li>Круги руками с гантелями 15 раз / 3 подхода</li>
-                <li>Французский жим лёжа 20 раз / 4 подхода</li>
-                <li>Обратные скручивания 15-20 раз / 4 подхода</li>
+                <li>Стульчик 30-60 сек / 3 подхода</li>
+                <li>Зашагивание на платформу (стул) 12-15 раз / 3 подхода</li>
+                <li>Выпады статические 12-15 раз на каждую ногу / 4 подхода</li>
+                <li>Разгибание и отведение бедра в сторону 12-15 раз на каждую сторону (2 движения = 1 раз) / 3 подхода</li>
+                <li>Отшагивание с резинкой 12 раз (два отшагивания в сторону = 1 раз) / 3 подхода</li>
+                <li>Косые скручивания 20 раз / 4 подхода</li>
             </ol>
             <div class="details">
-                <div>Отдых между подходами 60 секунд</div>
-                <div>Между упражнениями до двух минут</div>
+                Отдых между подходами 60 секунд<br>
+                Между упражнениями до двух минут
             </div>
             <div class="note">
                 После тренировки сделать заминку-растяжку.
@@ -189,48 +176,63 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/c3/c3a5/c3a5007628029a8ec12a5d598dda1282/11_Uprajnenie_Stul_chik.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/00/0064/0064dbf6e32439fa1f8b9e420dc9e2cc/1_Uprajnenie_stul_chik.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Стульчик</div>
+                <div class="video-caption">Упражнение "Стульчик"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/66/6650/6650aa59f90af3c035d484c05de2b241/1_Uprajnenie_Mobil_nost__plechevogo_sustava_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/c6/c6bb/c6bb7158b660f34136575d23173f4685/2_Uprajnenie_Zashagivanie_na_platformu.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Мобильность плечевого сустава</div>
+                <div class="video-caption">Упражнение "Зашагивание на платформу"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/95/9522/9522f65a1683e41306893a544ac80e38/2_Uprajnenie_Krugi_rukami_s_gantelyami.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/26/26a6/26a6250207f425c8eb289a745a0a6da1/3_Uprajnenie_Vyipadyi_staticheskie_1.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Круги руками с гантелями</div>
+                <div class="video-caption">Упражнение "Выпады статические"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/12/12e0/12e05d2a81fb7cdd5982f3f113fd60c9/3_Uprajnenie_Frantsuzskiy_jim_leja.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/c3/c3e1/c3e1844cd6059aa147fbba8818cfe86a/4_Uprajnenie_Razgibanie_i_otvedenie_bedra_1.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Французский жим лёжа</div>
+                <div class="video-caption">Упражнение "Разгибание и отведение бедра"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/a8/a8c0/a8c07f6ed866de261f164c0035cbac90/4_Uprajnenie_Obratnyie_skruchivaniya.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/65/6593/6593abfcd3dff46c7006e05a5cb4978a/5_Uprajnenie_Otshagivanie_s_rezinoy_1.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Обратные скручивания</div>
+                <div class="video-caption">Упражнение "Отшагивание с резиной"</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/1e/1e91/1e9172fabdbeb490286a1f8c5e1977bb/6_Uprajnenie_Kosyie_skruchivaniya_1.mp4#t=0.1" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">Упражнение "Косые скручивания"</div>
+            </div>
+            <div class="video-item">
+                <div class="video-preview">
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/31/31b4/31b45d107082e63849d83330865c967a/IMG_2137.mp4#t=0.1" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-caption">
+                    Добавочная тренировка<br>
+                    Делаем все упражнения по очереди, повторяем 4-5 кругов<br>
+                    Отдых между кругами 60 секунд
+                </div>
             </div>
         </div>
     </div>
@@ -240,7 +242,7 @@
             <span class="nav-icon">&#8962;</span>
             <span class="nav-label">Главная</span>
         </a>
-        <a href="trainings.html" class="nav-item">
+        <a href="trainings.html" class="nav-item active">
             <span class="nav-icon">&#128170;</span>
             <span class="nav-label">Тренировки</span>
         </a>
@@ -253,14 +255,5 @@
             <span class="nav-label">Профиль</span>
         </a>
     </nav>
-
-    <script>
-        // Возвращаем видео на начало при первом запуске (чтобы не было задержки на кадре из #t=0.1)
-        document.querySelectorAll('video').forEach(video => {
-            video.addEventListener('play', function() {
-                this.currentTime = 0;
-            }, { once: true });
-        });
-    </script>
 </body>
 </html>

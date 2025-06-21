@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Понедельник — Неделя 2</title>
+    <title>Неделя 4 — Тренировка 11</title>
     <style>
         body {
             background: #faf9f6;
@@ -11,36 +11,28 @@
             font-family: 'Inter', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .container {
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px 16px 90px 16px;
+            padding: 18px 12px 90px 12px;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 16px 0;
+            font-size: 1.5em;
         }
         .instruction-block {
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 20px 16px;
-            margin-bottom: 20px;
+            padding: 18px 14px 12px 14px;
+            margin-bottom: 18px;
             width: 100%;
             box-sizing: border-box;
-            text-align: left;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin: 0 0 20px 0;
-            font-size: 1.5em;
         }
         .instruction-block h2 {
             text-align: center;
@@ -48,41 +40,30 @@
             margin: 0 0 10px 0;
             font-size: 1.1em;
             font-weight: 600;
-        }
-        .important {
-            text-align: center;
-            font-weight: 600;
-            margin: 10px 0 12px 0;
             text-decoration: underline;
         }
         .exercise-list {
-            margin: 0 0 16px 0;
+            margin: 0 0 14px 0;
             padding: 0 0 0 18px;
             font-size: 1em;
             font-weight: 600;
             line-height: 1.6;
         }
-        .superset {
-            margin: 12px 0 8px 0;
-            font-weight: 600;
-        }
-        .details {
-            font-size: 0.98em;
-            margin: 10px 0;
-        }
-        .note {
+        .details, .note {
             font-size: 0.98em;
             color: #444;
             text-align: center;
-            text-decoration: underline;
             margin-top: 10px;
+        }
+        .note {
+            text-decoration: underline;
+            margin-top: 12px;
         }
         .videos-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 16px;
             width: 100%;
-            max-width: 100%;
             margin: 0 auto 16px auto;
         }
         .video-item {
@@ -103,21 +84,23 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 16px 16px 0 0;
+            position: relative;
         }
         .video-preview video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             background: #000;
+            display: block;
         }
         .video-caption {
-            padding: 12px 8px;
-            font-size: 1rem;
+            padding: 14px 10px;
+            font-size: 1em;
             color: #222;
             text-align: center;
             background: #faf9f6;
             border-radius: 0 0 16px 16px;
-            min-height: 48px;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -171,28 +154,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Неделя 2<br>Тренировка 4</h1>
+        <h1>Неделя 4<br>Тренировка 11</h1>
         <div class="instruction-block">
             <h2>Сделайте разминку обязательно</h2>
             <ol class="exercise-list">
-                <li>Боковая планка 12-15 раз на каждую сторону / 3 подхода</li>
-            </ol>
-            <div class="superset">Супер сет.<br>
-                Делаем сразу два упражнения — это считается один подход. Отдых между подходами до 3 минут.
-            </div>
-            <ol class="exercise-list" start="2">
-                <li>Выпады с резинкой 12-15 раз на каждую ногу + Отведение бедра 12-15 раз / 3 подхода</li>
-            </ol>
-            <ol class="exercise-list" start="3">
-                <li>Ягодичный мостик 15 раз + 15 раз. Фрогги<br>
-                    2 подхода<br>
-                    Отдых между подходами до трёх минут
-                </li>
-                <li>Вертикальные ножницы 20 раз / 3 подхода</li>
+                <li>Боковая планка со скручиванием 12-15 раз / 3 подхода</li>
+                <li>Тяга в наклоне с резинкой 15 раз на каждую руку / 4 подхода</li>
+                <li>Сгибание рук с гантелями 12 раз на каждую руку / 3 подхода</li>
+                <li>Разгибание рук в наклоне 15 раз / 4 подхода</li>
+                <li>Скручивание с согнутыми ногами в коленях 12-15 раз / 3 подхода</li>
             </ol>
             <div class="details">
-                Между первым и последним упражнениями от супер сетов отдых 2–3 минуты.<br>
-                Между подходами 1 минута.
+                Отдых между подходами 60 секунд<br>
+                Между упражнениями до двух минут
             </div>
             <div class="note">
                 После тренировки сделать заминку-растяжку.
@@ -201,57 +175,43 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                    <video controls controlsList="nodownload" preload="metadata">
                         <source src="https://storage2.bothelp.io/myuppy/26/26d1/26d198803e46d62e31d36e5395a546fd/1_Uprajnenie_Bokovaya_planka_so_skruchivaniem_grudnogo_otdela_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
                     </video>
                 </div>
-                <div class="video-caption">Боковая планка со скручиванием грудного отдела</div>
+                <div class="video-caption">Упражнение "Боковая планка со скручиванием"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/36/3682/36828abf53d341abdac0bc72d7a9a59c/2_Uprajnenie_Vyipadyi_s_rezinkoy_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/c2/c241/c2416e1cc1ef5bc35cf94ce624e86433/2_Uprajnenie_Tyaga_v_naklone_s_rezinkoy_1.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Выпады с резинкой</div>
+                <div class="video-caption">Упражнение "Тяга в наклоне с резинкой"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/62/62f0/62f040d609433c52d1d033fb6455c3c6/3_Uprajnenie_otvedenie_bedraDelaem_super_setom_s_vyipadami_kak_v_opisanii_k_trenirovke_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/43/43d1/43d1d9858759f67bb1ece3e966dafc3a/3_Uprajnenie_Sgibanie_ruk_s_gantelyami.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Отведение бедра (суперсет с выпадами)</div>
+                <div class="video-caption">Упражнение "Сгибание рук с гантелями"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/ee/ee65/ee65e60a56a2495dedab6049d4942f12/3_YAgodichnyiy_mostik_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/83/833a/833a3c6f3dbf82f732490916a3617a29/4_Uprajnenie_Razgibanie_ruk_v_naklone.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Ягодичный мостик</div>
+                <div class="video-caption">Упражнение "Разгибание рук в наклоне"</div>
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/23/23eb/23eb4a768637f919ca19cfa0ab05f106/4_mUprajnenie_Froggi_1.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
+                    <video controls controlsList="nodownload" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/76/76e2/76e2f4f191450b9754c6ff44689bc34c/5_Uprajnenie_Skruchivanie_s_sognutyimi_nogami_1.mp4#t=0.1" type="video/mp4">
                     </video>
                 </div>
-                <div class="video-caption">Фрогги</div>
-            </div>
-            <div class="video-item">
-                <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/0b/0bbb/0bbb8510a67efaffc8a4fc86a50d4a5a/6_vertikal_nyie_nojnitsyiyi.mp4#t=0.1" type="video/mp4">
-                        Ваш браузер не поддерживает видео.
-                    </video>
-                </div>
-                <div class="video-caption">Вертикальные ножницы</div>
+                <div class="video-caption">Упражнение "Скручивание с согнутыми ногами"</div>
             </div>
         </div>
     </div>
@@ -261,7 +221,7 @@
             <span class="nav-icon">&#8962;</span>
             <span class="nav-label">Главная</span>
         </a>
-        <a href="trainings.html" class="nav-item">
+        <a href="trainings.html" class="nav-item active">
             <span class="nav-icon">&#128170;</span>
             <span class="nav-label">Тренировки</span>
         </a>
@@ -274,14 +234,5 @@
             <span class="nav-label">Профиль</span>
         </a>
     </nav>
-
-    <script>
-        // Возвращаем видео на начало при первом запуске (чтобы не было задержки на кадре из #t=0.1)
-        document.querySelectorAll('video').forEach(video => {
-            video.addEventListener('play', function() {
-                this.currentTime = 0;
-            }, { once: true });
-        });
-    </script>
 </body>
 </html>
