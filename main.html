@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная — Тренировки</title>
+    <title>Главная — Фитнес</title>
     <style>
         body {
             background: #faf9f6;
@@ -20,68 +20,69 @@
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 12px 12px 90px 12px;
             box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 0 0 16px 0;
+            font-size: 1.3em;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin: 0 auto 16px auto;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        /* Баннер */
-        .banner {
-            background: #2c3e50;
-            border-radius: 12px;
-            padding: 12px 20px;
-            margin: 16px 0;
-            text-align: center;
-            height: 60px;
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44,62,80,0.13);
+        }
+        .card-preview {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+        }
+        .card-preview img {
             width: 100%;
-        }
-        .banner-text {
-            color: #fff;
-            font-size: 1.4em;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        /* Модули с картинками, по 2 в ряд */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            width: 100%;
-            margin-bottom: 80px;
-        }
-        .module {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-        .module-image {
-            width: 100%;
-            height: 120px;
+            height: 100%;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 8px;
+            display: block;
         }
-        .module-title {
-            font-size: 1.1em;
-            font-weight: 700;
-            color: #2c3e50;
-            margin: 0 0 4px 0;
-        }
-        .module-description {
+        .card-caption {
+            padding: 8px;
             font-size: 0.9em;
-            color: #444;
-            margin: 0;
+            color: #222;
+            text-align: center;
+            background: #faf9f6;
+            border-radius: 0 0 12px 12px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
         }
-        /* Нижнее меню — как на monday.html */
+        /* Нижнее меню */
         .bottom-nav {
             position: fixed;
             left: 0;
@@ -125,52 +126,55 @@
             font-size: 0.91em;
             line-height: 1.1;
         }
-        @media (max-width: 360px) {
-            .modules-grid {
-                gap: 12px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Баннер -->
-        <div class="banner">
-            <div class="banner-text">Вас ждёт</div>
-        </div>
-
-        <!-- Модули по 2 в ряд -->
-        <div class="modules-grid">
-            <div class="module">
-                <img src="images/placeholder1.jpg" alt="Силовые тренировки" class="module-image">
-                <div class="module-title">Силовые тренировки</div>
-                <div class="module-description">Программы для набора мышечной массы.</div>
-            </div>
-            <div class="module">
-                <img src="images/placeholder2.jpg" alt="Кардио" class="module-image">
-                <div class="module-title">Кардио</div>
-                <div class="module-description">Улучшите выносливость и здоровье.</div>
-            </div>
-            <div class="module">
-                <img src="images/placeholder3.jpg" alt="План питания" class="module-image">
-                <div class="module-title">План питания</div>
-                <div class="module-description">Сбалансированные диеты для целей.</div>
-            </div>
-            <div class="module">
-                <img src="images/placeholder4.jpg" alt="Йога и растяжка" class="module-image">
-                <div class="module-title">Растяжка</div>
-                <div class="module-description">Гибкость и восстановление тела.</div>
-            </div>
-            <div class="module">
-                <img src="images/placeholder5.jpg" alt="Функциональный тренинг" class="module-image">
-                <div class="module-title">Функциональный тренинг</div>
-                <div class="module-description">Упражнения для повседневной жизни.</div>
-            </div>
-            <div class="module">
-                <img src="images/placeholder6.jpg" alt="Мотивация" class="module-image">
-                <div class="module-title">Мотивация</div>
-                <div class="module-description">Советы для вашего вдохновения.</div>
-            </div>
+        </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Главная</h1>
+                <div class="grid">
+                    <!-- 1. Еженедельные тренировки -->
+                    <a href="trainings.html" class="card">
+                        <div class="card-preview">
+                            <img src="images/placeholder1.jpg" alt="Еженедельные тренировки">
+                        </div>
+                        <div class="card-caption">Еженедельные тренировки</div>
+                    </a>
+                    <!-- 2. Тренировки для зала -->
+                    <a href="trainings-gym.html" class="card">
+                        <div class="card-preview">
+                            <img src="images/placeholder2.jpg" alt="Тренировки для зала">
+                        </div>
+                        <div class="card-caption">Тренировки для зала</div>
+                    </a>
+                    <!-- 3. Питание -->
+                    <a href="food.html" class="card">
+                        <div class="card-preview">
+                            <img src="images/placeholder3.jpg" alt="Питание">
+                        </div>
+                        <div class="card-caption">Питание</div>
+                    </a>
+            </a>
+            <!-- 4. Растяжка -->
+            <a href="razminka.html" class="card">
+                <div class="card-preview">
+                    <img src="images/placeholder4.jpg" alt="Растяжка">
+                </div>
+                <div class="card-caption">Растяжка</div>
+            </a>
+            <!-- 5. Калькулятор калорий -->
+            <a href="https://calorazh.ru" target="_blank" class="card">
+                <div class="card-preview">
+                    <img src="images/placeholder5.jpg" alt="Калькулятор калорий">
+                </div>
+                <div class="card-caption">Калькулятор калорий</div>
+            </a>
+            <!-- 6. Уход за собой -->
+            <a href="selfcare.html" class="card">
+                <div class="card-preview">
+                    <img src="images/placeholder6.jpg" alt="Уход за собой">
+                </div>
+                <div class="card-caption">Уход за собой</div>
+            </a>
         </div>
     </div>
 
