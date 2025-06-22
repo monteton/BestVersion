@@ -15,6 +15,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding-bottom: 80px; /* Защита от перекрытия меню */
         }
         .container {
             width: 100%;
@@ -22,6 +23,9 @@
             margin: 0 auto;
             padding: 16px 16px 90px 16px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             text-align: center;
@@ -81,15 +85,16 @@
             width: 90vw;
             max-width: 400px;
             max-height: 90vh;
-            overflow: hidden;
+            overflow: auto;
             display: flex;
             flex-direction: column;
+            padding: 20px;
         }
         .pdf-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 12px 0;
             background: #faf9f6;
         }
         .pdf-controls button {
@@ -119,11 +124,13 @@
             font-size: 1em;
             margin: 10px auto;
             display: block;
+            width: 120px;
         }
         #pdf-canvas {
             width: 100%;
             border: none;
-            flex-grow: 1;
+            border-radius: 8px;
+            background: #fff;
         }
         /* Видео */
         .videos-grid {
@@ -183,7 +190,7 @@
             justify-content: space-around;
             align-items: center;
             height: 66px;
-            z-index: 100;
+            z-index: 1000;
             border-radius: 18px 18px 0 0;
             width: 100%;
             max-width: 420px;
@@ -215,6 +222,23 @@
             font-size: 0.91em;
             line-height: 1.1;
         }
+        /* Адаптация под мобильные */
+        @media (max-width: 480px) {
+            .calorie-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .calorie-btn {
+                padding: 15px;
+                font-size: 0.95em;
+            }
+            .video-preview {
+                aspect-ratio: 9/16;
+            }
+            .video-caption {
+                font-size: 0.85em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -242,7 +266,7 @@
         <div class="videos-grid">
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                    <video controls controlsList="nodownload" width="100%" preload="metadata">
                         <source src="https://storage2.bothelp.io/myuppy/a5/a519/a5196261f3cec9d980791446a8720137/urok1_1.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
@@ -251,7 +275,7 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
+                    <video controls controlsList="nodownload" width="100%" preload="metadata">
                         <source src="https://storage2.bothelp.io/myuppy/47/4714/4714b0f1298aca36a961147cd66ff21b/Urok_2.mp4#t=0.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
@@ -260,8 +284,8 @@
             </div>
             <div class="video-item">
                 <div class="video-preview">
-                    <video controls controlsList="nodownload" width="100%" style="aspect-ratio: 9 / 16;" preload="metadata">
-                        <source src="https://storage2.bothelp.io/myuppy/86/86a9/86a9725b373d1c7041f76e628e5ea154/IMG_1518.mp4#t=0.1" type="video/mp4">
+                    <video controls controlsList="nodownload" width="100%" preload="metadata">
+                        <source src="https://storage2.bothelp.io/myuppy/86/86a9/86a9725b373d1c7041f76e628e5ea154/IMG_1518.mp4#t=极.1" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
                 </div>
@@ -270,16 +294,16 @@
         </div>
     </div>
 
-    <!-- Модальное окно для PDF -->
+    <!-- Модальное окно PDF -->
     <div id="pdf-modal-bg" class="pdf-modal-bg">
         <div class="pdf-modal">
-            <button class="close-pdf" onclick="closePDF()">Закрыть PDF</button>
             <canvas id="pdf-canvas"></canvas>
             <div class="pdf-controls">
                 <button id="prev-page">Предыдущая</button>
                 <span id="page-info">Страница 1 из 1</span>
                 <button id="next-page">Следующая</button>
             </div>
+            <button class="close-pdf" onclick="closePDF()">Закрыть PDF</button>
         </div>
     </div>
 
@@ -302,7 +326,6 @@
         </a>
     </nav>
 
-    <!-- Подключение PDF.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 
