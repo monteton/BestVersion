@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <title>Главное меню</title>
+    <title>Тренировки для дома</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Стили для фона */
@@ -21,26 +21,37 @@
             min-height: 100vh;
         }
 
-        /* Контейнер, имитирующий экран мобильного телефона */
+        /* Контейнер использует Flexbox для фиксации хедера и футера */
         .mobile-frame {
             width: 100%;
             max-width: 430px;
             height: 100vh;
             background-color: #F9F4F2;
-            position: relative;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        }
-        .mobile-frame::-webkit-scrollbar {
-            display: none;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         
+        /* Стили для заголовка */
         header {
-            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
             padding-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
         }
 
         h1 {
@@ -48,11 +59,39 @@
             margin: 0;
         }
 
+        /* Основной контент является прокручиваемой областью */
         main {
-            padding: 0 16px;
-            padding-bottom: 100px;
+            padding: 10px 16px;
+            flex-grow: 1;
+            overflow-y: auto;
+             -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+         main::-webkit-scrollbar {
+            display: none;
         }
 
+        /* ИЗМЕНЕНИЕ: Стили для информационного баннера */
+        .info-banner {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info-banner-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+        .info-banner-desc {
+            font-size: 15px;
+            color: #555;
+            margin: 0;
+        }
+
+        /* Контейнер для кнопок, как на других страницах */
         .menu-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -67,7 +106,6 @@
             font-size: 15px;
             font-weight: 500;
             padding: 20px 15px;
-            /* Убрал transition для background-color, чтобы нажатие было мгновенным */
             transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -75,35 +113,28 @@
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-
-        /* ИЗМЕНЕНИЕ: Улучшен эффект нажатия */
         .menu-button:active {
             transform: scale(0.97);
-            /* Добавлен фон для явного отклика на нажатие */
             background-color: #f0f0f0;
         }
-
         .menu-button i {
             font-size: 24px;
             margin: 0;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             color: #b4f24c;
         }
         
-        /* ИЗМЕНЕНИЕ: Стиль для растягивания последней кнопки больше не нужен, т.к. их теперь 6 */
-        
-        /* Нижняя навигация */
+        footer {
+            flex-shrink: 0;
+        }
+
         .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
             display: flex;
             justify-content: space-around;
             background-color: rgba(255, 255, 255, 0.9);
             border-top: 1px solid #E5E5EA;
             padding-top: 10px;
-            padding-bottom: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
@@ -116,14 +147,12 @@
             text-decoration: none;
             font-size: 10px;
         }
-
         .nav-item i {
             font-size: 24px;
             margin-bottom: 4px;
         }
-
         .nav-item.active {
-            color: #6a6d66;
+            color: #83867e;
         }
     </style>
 </head>
@@ -131,38 +160,36 @@
 
     <div class="mobile-frame">
         <header>
-            <h1>Главное меню</h1>
+            <a href="treningmain.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Тренировки для дома</h1>
         </header>
 
         <main>
-            <!-- ИЗМЕНЕНИЕ: Порядок кнопок изменен и добавлена новая -->
+            <!-- Информационный баннер -->
+            <div class="info-banner">
+                <div class="info-banner-title">Тренировки</div>
+                <div class="info-banner-desc">Выберите неделю и приступайте к занятиям</div>
+            </div>
+
+            <!-- Сетка с неделями тренировок -->
             <div class="menu-container">
-                <a href="about.html" class="menu-button">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Приветствие</span>
+                <a href="trainings-week1.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 1</span>
                 </a>
-                <a href="treningmain.html" class="menu-button">
-                    <i class="fa-solid fa-dumbbell"></i>
-                    <span>Тренировки</span>
+                <a href="trainings-week2.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 2</span>
                 </a>
-                <a href="foodmain.html" class="menu-button">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span>Питание</span>
+                <a href="trainings-week3.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 3</span>
                 </a>
-                <a href="results.html" class="menu-button">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span>Всё для лучшего результата</span>
-                </a>
-                <a href="Motivation.html" class="menu-button">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>Мотивация
-                        Поддержка
-                        Наставления</span>
-                </a>
-                <!-- Новая кнопка "Профиль" -->
-                <a href="profile.html" class="menu-button">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>Мой профиль</span>
+                <a href="trainings-week4.html" class="menu-button">
+                    <i class="fa-solid fa-calendar-week"></i>
+                    <span>Неделя 4</span>
                 </a>
             </div>
         </main>
@@ -173,11 +200,11 @@
                     <i class="fa-solid fa-house"></i>
                     <span>Главная</span>
                 </a>
-                <a href="treningmain.html" class="nav-item">
+                <a href="treningmain.html" class="nav-item active">
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
                 </a>
-                <a href="foodmain.html" class="nav-item active">
+                <a href="food.html" class="nav-item">
                     <i class="fa-solid fa-utensils"></i>
                     <span>Питание</span>
                 </a>

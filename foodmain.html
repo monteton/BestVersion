@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <title>Главное меню</title>
+    <title>Питание</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Стили для фона */
@@ -37,10 +37,24 @@
             display: none;
         }
         
+        /* Стили для заголовка и кнопки "Назад" */
         header {
-            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
             padding-bottom: 10px;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
         }
 
         h1 {
@@ -67,7 +81,6 @@
             font-size: 15px;
             font-weight: 500;
             padding: 20px 15px;
-            /* Убрал transition для background-color, чтобы нажатие было мгновенным */
             transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -76,22 +89,23 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* ИЗМЕНЕНИЕ: Улучшен эффект нажатия */
         .menu-button:active {
             transform: scale(0.97);
-            /* Добавлен фон для явного отклика на нажатие */
             background-color: #f0f0f0;
         }
 
         .menu-button i {
             font-size: 24px;
             margin: 0;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             color: #b4f24c;
         }
         
-        /* ИЗМЕНЕНИЕ: Стиль для растягивания последней кнопки больше не нужен, т.к. их теперь 6 */
-        
+        /* Стиль для последней кнопки, чтобы она занимала всю ширину */
+        .menu-button:last-child {
+            grid-column: 1 / -1;
+        }
+
         /* Нижняя навигация */
         .bottom-nav {
             position: absolute;
@@ -123,7 +137,7 @@
         }
 
         .nav-item.active {
-            color: #6a6d66;
+            color: #8d8f8a;
         }
     </style>
 </head>
@@ -131,39 +145,36 @@
 
     <div class="mobile-frame">
         <header>
-            <h1>Главное меню</h1>
+            <a href="main.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Питание</h1>
         </header>
 
         <main>
-            <!-- ИЗМЕНЕНИЕ: Порядок кнопок изменен и добавлена новая -->
             <div class="menu-container">
-                <a href="about.html" class="menu-button">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Приветствие</span>
+                <a href="cal.html" class="menu-button">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Подсчет калорийности</span>
                 </a>
-                <a href="treningmain.html" class="menu-button">
-                    <i class="fa-solid fa-dumbbell"></i>
-                    <span>Тренировки</span>
+                <a href="kzbu.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Индивидуальный разбор КБЖУ</span>
                 </a>
-                <a href="foodmain.html" class="menu-button">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span>Питание</span>
+                 <a href="individual.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Рацион под свои запросы</span>
                 </a>
-                <a href="results.html" class="menu-button">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span>Всё для лучшего результата</span>
+                 <a href="foodvideo.html" class="menu-button">
+                    <i class="fa-solid fa-pie-chart"></i>
+                    <span>Полезное видео</span>
                 </a>
-                <a href="Motivation.html" class="menu-button">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>Мотивация
-                        Поддержка
-                        Наставления</span>
+                
+                <a href="food.html" class="menu-button">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Меню питания</span>
                 </a>
-                <!-- Новая кнопка "Профиль" -->
-                <a href="profile.html" class="menu-button">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>Мой профиль</span>
-                </a>
+               
             </div>
         </main>
         
@@ -177,6 +188,7 @@
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
                 </a>
+                <!-- Вкладка "Питание" теперь активна -->
                 <a href="foodmain.html" class="nav-item active">
                     <i class="fa-solid fa-utensils"></i>
                     <span>Питание</span>

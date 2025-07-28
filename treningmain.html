@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <title>Главное меню</title>
+    <title>Тренировки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Стили для фона */
@@ -37,10 +37,24 @@
             display: none;
         }
         
+        /* ИЗМЕНЕНИЕ: Добавлены стили для кнопки "Назад" */
         header {
-            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
             padding-bottom: 10px;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
         }
 
         h1 {
@@ -55,7 +69,7 @@
 
         .menu-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(1, 1fr);
             gap: 15px;
         }
 
@@ -67,7 +81,6 @@
             font-size: 15px;
             font-weight: 500;
             padding: 20px 15px;
-            /* Убрал transition для background-color, чтобы нажатие было мгновенным */
             transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -76,21 +89,17 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* ИЗМЕНЕНИЕ: Улучшен эффект нажатия */
         .menu-button:active {
             transform: scale(0.97);
-            /* Добавлен фон для явного отклика на нажатие */
             background-color: #f0f0f0;
         }
 
         .menu-button i {
             font-size: 24px;
             margin: 0;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             color: #b4f24c;
         }
-        
-        /* ИЗМЕНЕНИЕ: Стиль для растягивания последней кнопки больше не нужен, т.к. их теперь 6 */
         
         /* Нижняя навигация */
         .bottom-nav {
@@ -123,7 +132,7 @@
         }
 
         .nav-item.active {
-            color: #6a6d66;
+            color: #868b7d;
         }
     </style>
 </head>
@@ -131,38 +140,30 @@
 
     <div class="mobile-frame">
         <header>
-            <h1>Главное меню</h1>
+            <!-- Кнопка для возврата в главное меню -->
+            <a href="main.html" class="back-button">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Тренировки</h1>
         </header>
 
         <main>
-            <!-- ИЗМЕНЕНИЕ: Порядок кнопок изменен и добавлена новая -->
             <div class="menu-container">
-                <a href="about.html" class="menu-button">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Приветствие</span>
+                <a href="trainingshome.html" class="menu-button">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>Тренировки для дома</span>
                 </a>
-                <a href="treningmain.html" class="menu-button">
+                <a href="trainings-gym.html" class="menu-button">
                     <i class="fa-solid fa-dumbbell"></i>
-                    <span>Тренировки</span>
+                    <span>Тренировки для зала</span>
                 </a>
-                <a href="foodmain.html" class="menu-button">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span>Питание</span>
+                <a href="razminka.html" class="menu-button">
+                    <i class="fa-solid fa-fire"></i>
+                    <span>Разминка/заминка</span>
                 </a>
-                <a href="results.html" class="menu-button">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span>Всё для лучшего результата</span>
-                </a>
-                <a href="Motivation.html" class="menu-button">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>Мотивация
-                        Поддержка
-                        Наставления</span>
-                </a>
-                <!-- Новая кнопка "Профиль" -->
-                <a href="profile.html" class="menu-button">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>Мой профиль</span>
+                <a href="rastyazka.html" class="menu-button">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Растяжка</span>
                 </a>
             </div>
         </main>
@@ -173,11 +174,12 @@
                     <i class="fa-solid fa-house"></i>
                     <span>Главная</span>
                 </a>
-                <a href="treningmain.html" class="nav-item">
+                <!-- ИЗМЕНЕНИЕ: Вкладка "Тренировки" теперь активна -->
+                <a href="treningmain.html" class="nav-item active">
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
                 </a>
-                <a href="foodmain.html" class="nav-item active">
+                <a href="foodmain.html" class="nav-item">
                     <i class="fa-solid fa-utensils"></i>
                     <span>Питание</span>
                 </a>

@@ -2,101 +2,81 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Гайд по тренировкам — Главная</title>
     <style>
+        /* Стили для фона страницы */
         body {
             margin: 0;
             font-family: 'Inter', Arial, sans-serif;
-            background-image: url('images/banner.jpg');
-            background-size: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #222;
+            background-color: #dcdcdc; 
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
         }
-        .banner {
-            background: linear-gradient(120deg, rgba(44,62,80,0.92) 70%, rgba(52,152,219,0.7));
-            padding: 18px 22px;
-            border-radius: 24px 8px 24px 8px;
-            color: #fff;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.15em;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-            max-width: 300px;
-            margin: 180px auto 0 auto;
-            animation: fadeInDown 0.8s ease forwards;
+
+        /* Контейнер, имитирующий экран мобильного телефона */
+        .mobile-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
             position: relative;
-            overflow: hidden;
-        }
-        .banner::after {
-            content: "★";
-            position: absolute;
-            top: -18px;
-            right: -18px;
-            font-size: 2.5em;
-            color: rgba(241,196,15,0.25);
-            transform: rotate(-18deg);
-            pointer-events: none;
-        }
-        .banner h1 {
-            margin: 0 0 6px 0;
-            font-size: 1.3em;
-            letter-spacing: 1px;
-            font-family: 'Inter', Arial, sans-serif;
-        }
-        .banner p {
-            margin: 0;
-            font-size: 0.95em;
-            font-weight: 400;
-            opacity: 0.92;
-        }
-        body {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            background-image: url('images/banner.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            overflow: hidden; 
         }
+
+        /* Контейнер для центрирования контента */
         .content {
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            /* ИЗМЕНЕНИЕ: Баннер теперь прижимается к низу контейнера */
+            justify-content: flex-end; 
             align-items: center;
-            padding: 0 20px;
+            height: 100%;
+            padding: 20px;
+            /* ИЗМЕНЕНИЕ: Добавлен отступ, чтобы поднять баннер над кнопкой и нижней панелью */
+            padding-bottom: 200px;
+            box-sizing: border-box;
         }
+        
         .banner {
-            background: rgba(44, 62, 80, 0.8);
+            background: rgba(123, 131, 118, 0.8);
             padding: 24px 32px;
             border-radius: 16px;
-            color: rgb(255, 255, 255);
+            color: white;
             text-align: center;
             font-weight: 700;
             font-size: 1.5em;
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            max-width: 380px;
-            margin: 300px auto 0 auto;
             animation: fadeInDown 0.8s ease forwards;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            max-width: 90%;
         }
+
+        .banner.show {
+            opacity: 1;
+        }
+
         .banner h1 {
             margin: 0 0 8px 0;
+            font-size: 1.2em;
         }
+
         .banner p {
             margin: 0;
             font-size: 1rem;
             font-weight: 400;
         }
-        .start-btn-container {
-            padding: 24px 20px;
-            background: rgba(150, 148, 148, 0.9);
-            display: flex;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease forwards;
-        }
+
+        /* Кнопка "Начать" */
         .start-btn {
-            background: #2c3e50;
+            background: #5cbd0d;
             color: white;
             border: none;
             border-radius: 16px;
@@ -107,32 +87,83 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: background 0.3s ease;
+            position: absolute;
+            bottom: calc(90px + env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
         }
+
         .start-btn:hover {
-            background: #1a2635;
+            background: #4a9c0a;
         }
-        /* Анимации */
+
+        /* "Беговая дорожка" */
+        .fitness-track {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            z-index: 1;
+            overflow: hidden;
+        }
+        
         @keyframes fadeInDown {
             0% { opacity: 0; transform: translateY(-30px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
+        
+        .track-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            justify-content: center;
+            height: 100%;
         }
+        .track-line {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            width: 200%;
+            animation: trackLine 2s infinite linear;
+        }
+        @keyframes trackLine {
+            0% { transform: translateX(-25%); }
+            100% { transform: translateX(0%); }
+        }
+
     </style>
 </head>
 <body>
-    <div class="content">
-        <div class="banner">
-            <h1>
-                "Лучшая версия себя"
-            </h1>
-            <p>Ваш путь к здоровью и силе начинается здесь</p>
+
+    <div class="mobile-frame">
+        <div class="content">
+            <div class="banner">
+                <h1>"Лучшая версия себя"</h1>
+                <p>Ваш путь к здоровью и силе начинается здесь</p>
+            </div>
+        </div>
+        
+        <a href="main.html" class="start-btn">Начать</a>
+        
+        <div class="fitness-track">
+            <div class="track-lines">
+                <div class="track-line"></div>
+                <div class="track-line"></div>
+                <div class="track-line"></div>
+            </div>
         </div>
     </div>
-    <div class="start-btn-container">
-        <a href="main.html" class="start-btn">Начать</a>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const banner = document.querySelector('.banner');
+            setTimeout(() => {
+                banner.classList.add('show');
+            }, 200);
+        });
+    </script>
 </body>
 </html>

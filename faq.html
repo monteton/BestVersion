@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ответы на вопросы</title>
+    <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             background: #faf9f6;
@@ -21,7 +23,8 @@
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
-            padding: 16px 16px 90px 16px;
+            /* Отступ снизу под новое меню */
+            padding: 16px 16px 100px 16px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -88,49 +91,41 @@
             padding: 8px 16px;
             cursor: pointer;
         }
-        /* Нижнее меню */
-        .bottom-nav {
+
+        /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
+        footer {
             position: fixed;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: #fff;
-            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            max-width: 430px;
+            margin: 0 auto;
+            z-index: 100;
+        }
+        .bottom-nav {
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            height: 66px;
-            z-index: 100;
-            border-radius: 18px 18px 0 0;
-            width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
+            padding-top: 10px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: #8A8A8E;
             text-decoration: none;
-            color: #888;
-            font-size: 0.93em;
-            gap: 2px;
-            transition: color 0.2s;
-            padding: 6px 0;
-            min-width: 54px;
-            max-width: 80px;
-            overflow: hidden;
-            white-space: nowrap;
+            font-size: 10px;
         }
-        .nav-item.active, .nav-item:active {
-            color: #222;
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
         }
-        .nav-icon {
-            font-size: 1.34em;
-            line-height: 1;
-        }
-        .nav-label {
-            font-size: 0.91em;
-            line-height: 1.1;
+        .nav-item.active {
+            color: #7f817c;
         }
     </style>
 </head>
@@ -142,6 +137,8 @@
         
         <div id="pdf-container">
             <canvas id="pdf-canvas"></canvas>
+            <!-- ИЗМЕНЕНИЕ: Добавлен контейнер для счетчика страниц -->
+            <div id="page-info" style="text-align: center; margin-top: 10px;"></div>
             <div class="pdf-controls">
                 <button id="prev-page">Предыдущая</button>
                 <button id="next-page">Следующая</button>
@@ -149,47 +146,47 @@
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <span class="nav-icon">&#8962;</span>
-            <span class="nav-label">Главная</span>
-        </a>
-        <a href="trainings.html" class="nav-item">
-            <span class="nav-icon">&#128170;</span>
-            <span class="nav-label">Тренировки</span>
-        </a>
-        <a href="food.html" class="nav-item">
-            <span class="nav-icon">&#127828;</span>
-            <span class="nav-label">Питание</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <span class="nav-icon">&#128100;</span>
-            <span class="nav-label">Профиль</span>
-        </a>
-    </nav>
+    <!-- ИЗМЕНЕНИЕ: Новый блок навигации -->
+    <footer>
+        <nav class="bottom-nav">
+            <a href="main.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Главная</span>
+            </a>
+            <a href="treningmain.html" class="nav-item">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Тренировки</span>
+            </a>
+            <a href="foodmain.html" class="nav-item">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Питание</span>
+            </a>
+            <!-- Вкладка "Профиль" активна для этой страницы -->
+            <a href="profile.html" class="nav-item active">
+                <i class="fa-solid fa-user"></i>
+                <span>Профиль</span>
+            </a>
+        </nav>
+    </footer>
 
     <!-- Подключаем PDF.js из CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        // Конфигурация PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 
-            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
         
-        // Элементы страницы
         const pdfBtn = document.getElementById('show-pdf-btn');
         const pdfContainer = document.getElementById('pdf-container');
         const canvas = document.getElementById('pdf-canvas');
         const prevBtn = document.getElementById('prev-page');
         const nextBtn = document.getElementById('next-page');
+        const pageInfoEl = document.getElementById('page-info'); // Элемент для счетчика
         
-        // Переменные для управления PDF
         let pdfDoc = null;
         let pageNum = 1;
         let pageRendering = false;
         let pageNumPending = null;
         const scale = 1.5;
         
-        // Функция для отображения страницы
         function renderPage(num) {
             pageRendering = true;
             
@@ -214,12 +211,9 @@
                 });
             });
             
-            // Обновление информации о странице
-            document.getElementById('page-info').textContent = 
-                `Страница ${num} из ${pdfDoc.numPages}`;
+            pageInfoEl.textContent = `Страница ${num} из ${pdfDoc.numPages}`;
         }
         
-        // Функция для перелистывания страниц
         function queueRenderPage(num) {
             if (pageRendering) {
                 pageNumPending = num;
@@ -228,40 +222,31 @@
             }
         }
         
-        // Предыдущая страница
         function onPrevPage() {
             if (pageNum <= 1) return;
             pageNum--;
             queueRenderPage(pageNum);
         }
         
-        // Следующая страница
         function onNextPage() {
             if (pageNum >= pdfDoc.numPages) return;
             pageNum++;
             queueRenderPage(pageNum);
         }
         
-        // Обработчик кнопки "Открыть PDF"
         pdfBtn.addEventListener('click', function() {
-            // Путь к PDF-файлу
+            // ИЗМЕНЕНИЕ: Добавлена проверка, чтобы не загружать PDF повторно
+            if (pdfDoc) { 
+                pdfContainer.style.display = 'block';
+                return;
+            }
+
+            /// Путь к PDF-файлу
             const pdfUrl = 'pdfs/faq.pdf';
             
-            // Загрузка PDF-документа
             pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                
-                // Показываем контейнер
                 pdfContainer.style.display = 'block';
-                
-                // Добавляем информацию о странице
-                const pageInfo = document.createElement('div');
-                pageInfo.id = 'page-info';
-                pageInfo.style.textAlign = 'center';
-                pageInfo.style.marginTop = '10px';
-                pdfContainer.appendChild(pageInfo);
-                
-                // Показываем первую страницу
                 renderPage(pageNum);
             }).catch(function(error) {
                 console.error('Ошибка при загрузке PDF:', error);
@@ -269,9 +254,9 @@
             });
         });
         
-        // Назначаем обработчики для кнопок навигации
         prevBtn.addEventListener('click', onPrevPage);
         nextBtn.addEventListener('click', onNextPage);
     </script>
 </body>
 </html>
+
