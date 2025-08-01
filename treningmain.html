@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     
     <title>Тренировки</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -22,16 +22,12 @@
         .mobile-frame {
             width: 100%;
             max-width: 430px;
-            height: 100vh;
+            min-height: 100vh; /* Чтобы можно было скроллить при необходимости */
             background-color: #F9F4F2;
             position: relative;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        }
-        .mobile-frame::-webkit-scrollbar {
-            display: none;
+            display: flex;
+            flex-direction: column;
         }
         header {
             position: relative;
@@ -40,6 +36,7 @@
             align-items: center;
             padding: 20px;
             padding-bottom: 10px;
+            flex-shrink: 0;
         }
         .back-button {
             position: absolute;
@@ -56,7 +53,14 @@
         }
         main {
             padding: 0 16px;
-            padding-bottom: 100px;
+            padding-bottom: 100px; /* Отступ снизу, чтобы контент не перекрывал меню */
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE и Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        main::-webkit-scrollbar {
+            display: none;
         }
         .menu-container {
             display: grid;
@@ -88,19 +92,27 @@
             margin-bottom: 12px;
             color: #b4f24c;
         }
+        /* Фиксированное нижнее меню */
         .bottom-nav {
-            position: absolute;
+            position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            right: auto;
             display: flex;
             justify-content: space-around;
             background-color: rgba(255, 255, 255, 0.9);
             border-top: 1px solid #E5E5EA;
             padding-top: 10px;
-            padding-bottom: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
+            height: 66px;
+            width: 100%;
+            max-width: 430px;
+            box-sizing: border-box;
+            border-radius: 18px 18px 0 0;
+            z-index: 100;
         }
         .nav-item {
             display: flex;
@@ -120,11 +132,10 @@
     </style>
 </head>
 <body>
-
     <div class="mobile-frame">
         <header>
             <!-- Кнопка для возврата в главное меню -->
-            <a href="main.html" class="back-button">
+            <a href="main.html" class="back-button" aria-label="Назад">
                 <i class="fa-solid fa-chevron-left"></i>
             </a>
             <h1>Тренировки</h1>
@@ -171,12 +182,12 @@
         </main>
         
         <footer>
-            <nav class="bottom-nav">
+            <nav class="bottom-nav" role="navigation" aria-label="Основное меню">
                 <a href="main.html" class="nav-item">
                     <i class="fa-solid fa-house"></i>
                     <span>Главная</span>
                 </a>
-                <a href="treningmain.html" class="nav-item active">
+                <a href="treningmain.html" class="nav-item active" aria-current="page">
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
                 </a>
@@ -191,6 +202,5 @@
             </nav>
         </footer>
     </div>
-
 </body>
 </html>
