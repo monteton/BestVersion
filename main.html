@@ -67,7 +67,6 @@
             font-size: 15px;
             font-weight: 500;
             padding: 20px 15px;
-            /* Убрал transition для background-color, чтобы нажатие было мгновенным */
             transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -76,10 +75,8 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* ИЗМЕНЕНИЕ: Улучшен эффект нажатия */
         .menu-button:active {
             transform: scale(0.97);
-            /* Добавлен фон для явного отклика на нажатие */
             background-color: #f0f0f0;
         }
 
@@ -89,8 +86,6 @@
             margin-bottom: 20px;
             color: #b4f24c;
         }
-        
-        /* ИЗМЕНЕНИЕ: Стиль для растягивания последней кнопки больше не нужен, т.к. их теперь 6 */
         
         /* Нижняя навигация */
         .bottom-nav {
@@ -135,7 +130,6 @@
         </header>
 
         <main>
-            <!-- ИЗМЕНЕНИЕ: Порядок кнопок изменен и добавлена новая -->
             <div class="menu-container">
                 <a href="about.html" class="menu-button">
                     <i class="fa-solid fa-user"></i>
@@ -153,7 +147,7 @@
                     <i class="fa-solid fa-trophy"></i>
                     <span>Всё для лучшего результата</span>
                 </a>
-                <a href="motivation.html" class="menu-button">
+                <a href="Motivation.html" class="menu-button">
                     <i class="fa-solid fa-heart"></i>
                     <span>Мотивация
                         Поддержка
@@ -163,6 +157,16 @@
                 <a href="profile.html" class="menu-button">
                     <i class="fa-solid fa-circle-user"></i>
                     <span>Мой профиль</span>
+                </a>
+                <!-- Добавлено: Уход за собой -->
+                <a href="selfcare.html" class="menu-button">
+                    <i class="fa-solid fa-spa"></i>
+                    <span>Уход за собой</span>
+                </a>
+                <!-- Добавлено: Ответы на вопросы -->
+                <a href="faq.html" class="menu-button">
+                    <i class="fa-solid fa-question"></i>
+                    <span>Ответы на вопросы</span>
                 </a>
             </div>
         </main>
