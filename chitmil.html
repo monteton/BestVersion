@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    
-    <title>От автора</title>
+    <title>Читмил</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         body {
@@ -22,11 +21,12 @@
         .mobile-frame {
             width: 100%;
             max-width: 430px;
-            min-height: 100vh;
+            height: 100vh;
             background-color: #F9F4F2;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         header {
             position: relative;
@@ -51,67 +51,74 @@
             margin: 0;
         }
         main {
-            padding: 10px 20px;
-            padding-bottom: calc(20px + 66px); /* Отступ под меню */
+            padding: 0 16px;
+            padding-bottom: calc(20px + 66px);
             flex-grow: 1;
             overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
             color: #222;
         }
         main::-webkit-scrollbar {
             display: none;
         }
-        .video-container {
+        .image-container {
             width: 100%;
-            margin-bottom: 20px;
+            margin: 20px 0;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
         }
-        .video-container video {
+        .image-container img {
             width: 100%;
+            height: auto;
             display: block;
-            border-radius: 18px;
         }
         .text-content {
-            background-color: #ffffff;
-            padding: 20px;
+            background-color: #fff;
             border-radius: 18px;
+            padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             font-size: 16px;
             line-height: 1.6;
         }
-        .text-content p {
-            margin: 0 0 15px 0;
+        .text-content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 16px;
         }
-        .text-content p:last-child {
-            margin-bottom: 0;
+        .text-content p {
+            margin: 0 0 14px 0;
         }
         .text-content strong {
             font-weight: 700;
             color: #2c3e50;
+        }
+        .text-content ul {
+            margin: 0 0 14px 20px;
+            padding: 0;
         }
         footer {
             flex-shrink: 0;
         }
         .bottom-nav {
             position: fixed;
-            left: 50%;
             bottom: 0;
+            left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid #E5E5EA;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 66px;
             width: 100%;
             max-width: 430px;
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255,255,255,0.9);
+            border-top: 1px solid #E5E5EA;
             padding-top: 10px;
             padding-bottom: calc(20px + env(safe-area-inset-bottom));
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
+            height: 66px;
             box-sizing: border-box;
             border-radius: 18px 18px 0 0;
             z-index: 100;
@@ -123,45 +130,47 @@
             color: #8A8A8E;
             text-decoration: none;
             font-size: 10px;
+            user-select: none;
         }
         .nav-item i {
             font-size: 24px;
             margin-bottom: 4px;
         }
         .nav-item.active {
-            color: #b4f24c;
+            color: #8d8f8a;
         }
     </style>
 </head>
 <body>
-
     <div class="mobile-frame">
         <header>
-            <a href="main.html" class="back-button" aria-label="Назад">
+            <a href="foodmain.html" class="back-button" aria-label="Назад">
                 <i class="fa-solid fa-chevron-left"></i>
             </a>
-            <h1>Приветствие</h1>
+            <h1>Читмил</h1>
         </header>
 
         <main>
-            <div class="video-container">
-                <video src="https://file-storage.bothelp.io/myuppy/1b/1bdc/1bdc3ddaaee26d7503e54220585e794a/%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B8%D0%B5%20%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5.mp4" controls playsinline></video>
+            <div class="image-container">
+                <img src="https://storage2.bothelp.io/myuppy/e5/e567/e567345e63754cc4fc9adb376f70b3b6/photo_2025-02-01_16-11-53.jpg" alt="Читмил" />
             </div>
+
             <div class="text-content">
-                <p><strong>Привет!</strong> Меня зовут Наталья, и я рада приветствовать вас в моем приложении.</p>
-                <p>Здесь я собрала все свои знания и опыт, чтобы помочь вам достичь фигуры мечты без голодовок и изнурительных тренировок.</p>
-                <p>Посмотрите это короткое видео, чтобы познакомиться со мной поближе!</p>
-                <p><strong>Что вас ждет в программе и какие материалы будут вам доступны:</strong></p>
-                <ul>
-                    <li>Тренировки для дома: 3 основные ОБЯЗАТЕЛЬНЫЕ тренировки + 1 круговая-бонусная, если вы готовы всех сразить своими результатами🔥</li>
-                    <li>Кроме тренировок вам доступны гайды по питанию, тренировкам, а также видео тренировки по растяжке и МФР, ухода за кожей.</li>
-                    <li>Чтобы их посмотреть, вам нужно выбрать в меню соответствующую кнопку.</li>
-                </ul>
-                <p><strong>Тренировки</strong> будут проходить три раза в неделю: понедельник-среда-пятница и дополнительная в субботу, если понадобится и будут силы.</p>
-                <p><strong>Среда-четверг</strong> — это дни кардио. Вы самостоятельно выбираете любую физическую активность: бег, ходьбу (не менее 10 000 шагов), плавание, танцы, йога или просто уборка дома — главное не лежать.</p>
-                <p>В субботу также кардио или круговая тренировка, совмещаем с банным днём, уходом за кожей, делаем маски, обертывания, ванну с солью и содой, баню, сауну и так далее.</p>
-                <p><strong>Воскресенье</strong> — выходной, можно сделать небольшой ЧИТМИЛ (по желанию).</p>
-                <p>Взвешивание раз в две недели или раз в неделю, не чаще ☝🏻</p>
+                <p><strong>В воскресенье</strong> мы можем себе позволить читмил.</p>
+
+                <p><strong>Что же такое читмил? Для чего он нужен?</strong></p>
+
+                <p>Читмил – это запланированное нарушение диеты, то есть отклонение от прописанного рациона. Например, шесть дней в неделю вы соблюдаете режим питания, на седьмой день вы можете себе позволить одну вкусняшку, только одну ☝️. Это и будет ваш читмил.</p>
+
+                <p>Если вдруг в середине недели вы решаете съесть какое-нибудь лакомство, не входящее в ваш рацион, во время марафона, то это называется «срыв» и не имеет ничего общего с читмилом. Запланированное отклонение от диеты, или читмил, – это санкционированное нарушение, которое совершается не просто так.</p>
+
+                <p>Среди плюсов читмила можно назвать психологическую разгрузку организма и возможность разнообразить рацион.</p>
+
+                <p>Но есть такие девушки, которые позволяют себе читмил и потом никак не могут перестать думать о следующем читмиле. Это плохо и это больше психологическая проблема.</p>
+
+                <p>Как правило, читмилы проводят на стадии жиросжигания (сушки) для разгона обмена веществ. Это еще один большой плюс такого питания, помимо психологической разгрузки. Вот почему наш обмен веществ периодически нуждается в «раскрутке».</p>
+
+                <p>Так что думаем головой, учимся себя контролировать и держать в руках 🙌, чтобы не срываться.</p>
             </div>
         </main>
 
@@ -175,17 +184,16 @@
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
                 </a>
-                <a href="foodmain.html" class="nav-item">
+                <a href="foodmain.html" class="nav-item active" aria-current="page">
                     <i class="fa-solid fa-utensils"></i>
                     <span>Питание</span>
                 </a>
-                <a href="profile.html" class="nav-item active" aria-current="page">
+                <a href="profile.html" class="nav-item">
                     <i class="fa-solid fa-user"></i>
                     <span>Профиль</span>
                 </a>
             </nav>
         </footer>
     </div>
-
 </body>
 </html>

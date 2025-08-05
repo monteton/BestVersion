@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <title>Разминка/Заминка</title>
     <!-- ИЗМЕНЕНИЕ: Подключена библиотека иконок для нового меню -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ИЗМЕНЕНИЕ: Общие стили для "мобильной рамки" и фона */
         body {
@@ -25,12 +25,12 @@
         .mobile-frame {
             width: 100%;
             max-width: 430px;
-            min-height: 100vh; /* changed from height to min-height */
+            height: 100vh;
             background-color: #F9F4F2;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
-            /* overflow: hidden; удалено, чтобы позволить скроллить */
+            overflow: hidden;
         }
 
         header {
@@ -61,16 +61,16 @@
 
         main {
             padding: 10px 16px;
-            padding-bottom: calc(20px + 66px); /* Отступ снизу чтоб не перекрывал меню (66px — высота меню) */
+            padding-bottom: 20px; /* Отступ снизу */
             flex-grow: 1;
             overflow-y: auto;
-            -ms-overflow-style: none;  /* IE и Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-
         main::-webkit-scrollbar {
             display: none;
         }
+        /* КОНЕЦ ИЗМЕНЕНИЙ для "мобильной рамки" */
 
         .videos-grid {
             display: grid;
@@ -80,7 +80,6 @@
             max-width: 100%;
             margin: 0 auto 16px auto;
         }
-
         .video-item {
             background: #fff;
             border-radius: 16px;
@@ -89,13 +88,11 @@
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Добавлен отступ для видео */
         }
-
         .video-item:last-child {
-            margin-bottom: 0;
+            margin-bottom: 0; /* Убираем отступ у последнего видео */
         }
-
         .video-preview {
             width: 100%;
             aspect-ratio: 9 / 16;
@@ -106,14 +103,12 @@
             overflow: hidden;
             border-radius: 16px 16px 0 0;
         }
-
         .video-preview video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             background: #000;
         }
-
         .video-caption {
             padding: 16px 12px;
             font-size: 1em;
@@ -124,45 +119,32 @@
             flex-direction: column;
             gap: 8px;
         }
-
         .video-caption h3 {
             margin: 0 0 4px 0;
             font-size: 1.2em;
             color: #2c3e50;
             font-weight: 600;
         }
-
         .video-caption p {
             margin: 0;
             font-size: 0.98em;
             color: #444;
         }
-
+        
         /* ИЗМЕНЕНИЕ: Новые стили для нижнего меню */
         footer {
             flex-shrink: 0;
         }
 
         .bottom-nav {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-top: 1px solid #E5E5EA;
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            height: 66px;
-            width: 100%;
-            max-width: 430px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #E5E5EA;
             padding-top: 10px;
             padding-bottom: calc(20px + env(safe-area-inset-bottom));
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            box-sizing: border-box;
-            border-radius: 18px 18px 0 0;
-            z-index: 100;
         }
 
         .nav-item {
@@ -200,7 +182,7 @@
                 <div class="video-item">
                     <div class="video-preview">
                         <video controls width="100%" preload="metadata">
-                            <source src="https://storage2.bothelp.io/myuppy/01/0187/0187d88d6ea73a8ea14e38f918c1a6e8/IMG_2144__2_.mp4#t=0.1" type="video/mp4" />
+                            <source src="https://storage2.bothelp.io/myuppy/01/0187/0187d88d6ea73a8ea14e38f918c1a6e8/IMG_2144__2_.mp4#t=0.1" type="video/mp4">
                             Ваш браузер не поддерживает видео.
                         </video>
                     </div>
@@ -209,8 +191,41 @@
                         <p>Разминку перед каждым упражнением делать обязательно!!!</p>
                     </div>
                 </div>
-
-               
+                <!-- МФР -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/44/440c/440cc02d4955562e130a92c2f9eab8f3/IMG_1554.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>МФР</h3>
+                    </div>
+                </div>
+                <!-- Мобильность тазобедренного сустава 1 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/29/299d/299dc8c02629f64a0d17cb5df2bbebcf/IMG_1537.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Мобильность тазобедренного сустава 1</h3>
+                    </div>
+                </div>
+                <!-- Мобильность тазобедренного сустава 2 -->
+                <div class="video-item">
+                    <div class="video-preview">
+                        <video controls width="100%" preload="metadata">
+                            <source src="https://storage2.bothelp.io/myuppy/48/48bb/48bb953334f1da421987c8f8046ebc81/IMG_1538.mp4#t=0.1" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <h3>Мобильность тазобедренного сустава 2</h3>
+                    </div>
                 </div>
             </div>
         </main>
@@ -221,6 +236,7 @@
                     <i class="fa-solid fa-house"></i>
                     <span>Главная</span>
                 </a>
+                <!-- Вкладка "Тренировки" активна -->
                 <a href="treningmain.html" class="nav-item active">
                     <i class="fa-solid fa-dumbbell"></i>
                     <span>Тренировки</span>
@@ -245,6 +261,5 @@
             }, { once: true });
         });
     </script>
-
 </body>
 </html>
