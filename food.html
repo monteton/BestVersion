@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    
+
     <title>Питание</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -14,7 +16,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #dcdcdc; 
+            background-color: #dcdcdc;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,7 +34,7 @@
             flex-direction: column;
             overflow: hidden;
         }
-        
+
         /* Стили для заголовка */
         header {
             position: relative;
@@ -64,9 +66,10 @@
             padding: 10px 16px;
             flex-grow: 1;
             overflow-y: auto;
-             -ms-overflow-style: none;
+            -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
         main::-webkit-scrollbar {
             display: none;
         }
@@ -93,11 +96,12 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             cursor: pointer;
         }
+
         .calorie-btn:active {
             transform: scale(0.97);
             background-color: #f0f0f0;
         }
-        
+
         /* Модальное окно для PDF */
         .pdf-modal-bg {
             display: none;
@@ -106,81 +110,99 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.8);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
+
         .pdf-modal {
             background: #F9F4F2;
-            border-radius: 18px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.25);
-            width: 95vw;
-            max-width: 420px;
-            max-height: 90vh;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            box-shadow: none;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            box-sizing: border-box;
+            position: relative;
         }
-        .pdf-canvas-container {
+
+        /* Заголовок модального окна с кнопкой закрытия */
+        .pdf-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .close-pdf-icon {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            line-height: 1;
+        }
+
+        /* Контейнер для скроллинга страниц */
+        .pdf-scroll-container {
             flex-grow: 1;
             overflow-y: auto;
-            overflow-x: auto; /* ОЧЕНЬ ВАЖНО: для прокрутки при зуме */
-            border-radius: 12px;
-            background-color: #fff;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-            text-align: center; /* Центрируем canvas */
+            overflow-x: auto;
+            background-color: #cfc7b8;
+            /* Match view-pdf.html bg */
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
         }
-        #pdf-canvas {
-            display: block;
-            /* Убедитесь, что Canvas не имеет 100% ширины по CSS, иначе масштабирование не сработает */
-            width: auto; 
-            height: auto;
+
+        .pdf-scroll-container canvas {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            background-color: white;
+            transition: width 0.2s ease;
+            /* Width will be controlled by JS for zooming */
         }
+
         .pdf-controls {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 15px 0 5px 0;
-            gap: 5px;
+            padding: 10px;
+            gap: 15px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
         }
-        .pdf-controls button, .close-pdf {
+
+        .pdf-controls button {
             background-color: #ffffff;
             color: #333;
             border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 10px 10px;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            min-width: 40px;
-            flex-shrink: 0;
-        }
-        
-        /* Стили для навигационных элементов */
-        .pdf-controls #prev-page, 
-        .pdf-controls #next-page {
-             flex-grow: 1;
-             padding: 10px 15px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        #page-info {
-            font-size: 14px;
-            font-weight: 500;
-            min-width: 90px;
-            text-align: center;
-            flex-shrink: 0;
+        .pdf-controls button:active {
+            background-color: #f0f0f0;
         }
 
-        .close-pdf {
-            margin-top: 10px;
-            background-color: #FFE5E5;
-            border-color: #FFC2C2;
-            width: 100%;
-        }
-        
+
         /* Футер и навигация - без изменений */
         footer {
             flex-shrink: 0;
@@ -205,15 +227,18 @@
             text-decoration: none;
             font-size: 10px;
         }
+
         .nav-item i {
             font-size: 24px;
             margin-bottom: 4px;
         }
+
         .nav-item.active {
             color: #7f817c;
         }
     </style>
 </head>
+
 <body>
 
     <div class="mobile-frame">
@@ -227,16 +252,19 @@
         <main>
             <div class="calorie-grid">
                 <button class="calorie-btn" onclick="openPDF('pdfs/1300call.pdf')">1300 ккал</button>
-                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500 ккал</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1400-1500_kaloriy.pdf')">1400-1500
+                    ккал</button>
                 <button class="calorie-btn" onclick="openPDF('pdfs/Menyu1500-1600_kaloriy.pdf')">1500-1600 ккал</button>
-                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1600-1700_kaloriy.pdf')">1600-1700 ккал</button>
-                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1700-1800_kaloriy.pdf')">1700-1800 ккал</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1600-1700_kaloriy.pdf')">1600-1700
+                    ккал</button>
+                <button class="calorie-btn" onclick="openPDF('pdfs/Menyu_1700-1800_kaloriy.pdf')">1700-1800
+                    ккал</button>
                 <button class="calorie-btn" onclick="openPDF('pdfs/postnoe.pdf')">Постное меню</button>
                 <button class="calorie-btn" onclick="openPDF('pdfs/Pitanie_chast__1.pdf')">Питание часть 1</button>
                 <button class="calorie-btn" onclick="openPDF('pdfs/Pitanie_chast__2.pdf')">Питание часть 2</button>
             </div>
         </main>
-        
+
         <footer>
             <nav class="bottom-nav">
                 <a href="main.html" class="nav-item">
@@ -261,21 +289,19 @@
 
     <div id="pdf-modal-bg" class="pdf-modal-bg">
         <div class="pdf-modal">
-            <div class="pdf-canvas-container">
-                <canvas id="pdf-canvas"></canvas>
+            <div class="pdf-header">
+                <button class="close-pdf-icon" onclick="closePDF()" title="Закрыть">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="pdf-scroll-container" id="pdf-scroll-container">
+                <!-- Canvases will be injected here -->
+                <div id="loading-text" style="text-align: center; margin-top: 20px; color: #555;">Загрузка...</div>
             </div>
             <div class="pdf-controls">
-                <button id="zoom-out" title="Уменьшить"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-                <button id="zoom-in" title="Увеличить"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-                <button id="prev-page" title="Предыдущая страница">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <span id="page-info"></span>
-                <button id="next-page" title="Следующая страница">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+                <button id="zoom-out" title="Уменьшить"><i class="fa-solid fa-minus"></i></button>
+                <button id="zoom-in" title="Увеличить"><i class="fa-solid fa-plus"></i></button>
             </div>
-            <button class="close-pdf" onclick="closePDF()">Закрыть</button>
         </div>
     </div>
 
@@ -283,149 +309,126 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        const pdfContainer = document.getElementById('pdf-modal-bg');
-        const canvas = document.getElementById('pdf-canvas');
-        const prevBtn = document.getElementById('prev-page');
-        const nextBtn = document.getElementById('next-page');
-        const pageInfo = document.getElementById('page-info');
+        const pdfModal = document.getElementById('pdf-modal-bg');
+        const container = document.getElementById('pdf-scroll-container');
         const zoomInBtn = document.getElementById('zoom-in');
         const zoomOutBtn = document.getElementById('zoom-out');
-        const canvasContainer = document.querySelector('.pdf-canvas-container');
+        const loadingText = document.getElementById('loading-text');
 
         let pdfDoc = null;
-        let pageNum = 1;
-        let pageRendering = false;
-        let pageNumPending = null;
-        
-        let scale = 1.0; // Начальный масштаб 100%
-        const SCALE_STEP = 0.25; 
-        const MIN_SCALE = 0.5; 
-        const MAX_SCALE = 3.0; 
+        let pdfScalePercent = 100; // 100% width
+        const RENDER_SCALE = 2.0; // High resolution render
+        const SCALE_STEP = 25;
+        const MIN_SCALE = 50;
+        const MAX_SCALE = 300;
 
-        function renderPage(num) {
-            pageRendering = true;
-            pdfDoc.getPage(num).then(function(page) {
-                // Получаем базовый Viewport с масштабом 1.0
-                const baseViewport = page.getViewport({ scale: 1.0 });
-                
-                // Рассчитываем ширину контейнера
-                const containerWidth = canvasContainer.clientWidth;
-                
-                // Рассчитываем масштаб "по ширине"
-                const fitScale = containerWidth / baseViewport.width;
-
-                // Окончательный масштаб: произведение fitScale и нашего пользовательского scale
-                // Это гарантирует, что 1.0 (100%) масштабирования будет соответствовать ширине экрана
-                const finalScale = fitScale * scale;
-                
-                const viewport = page.getViewport({ scale: finalScale });
-
-                // Устанавливаем размеры canvas на основе нового viewport
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                // Убираем CSS-масштабирование, чтобы PDF.js управлял размером
-                canvas.style.width = viewport.width + 'px';
-                canvas.style.height = viewport.height + 'px';
-                
-                const renderContext = {
-                    canvasContext: canvas.getContext('2d'),
-                    viewport: viewport
-                };
-                
-                page.render(renderContext).promise.then(function() {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
+        function updateCanvasWidth() {
+            const canvases = container.querySelectorAll('canvas');
+            canvases.forEach(canvas => {
+                canvas.style.width = `${pdfScalePercent}%`;
             });
-            
-            // Обновляем информацию о странице и масштабе в процентах
-            pageInfo.textContent = `${num} / ${pdfDoc.numPages} (${Math.round(scale * 100)}%)`;
-            
-            prevBtn.disabled = num <= 1;
-            nextBtn.disabled = num >= pdfDoc.numPages;
-            zoomOutBtn.disabled = scale <= MIN_SCALE;
-            zoomInBtn.disabled = scale >= MAX_SCALE;
         }
 
-        function queueRenderPage(num) {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
+        async function renderAllPages() {
+            container.innerHTML = ''; // Clear previous
+            container.appendChild(loadingText);
+            loadingText.style.display = 'block';
+
+            if (!pdfDoc) return;
+
+            try {
+                // Render pages sequentially
+                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                    const page = await pdfDoc.getPage(pageNum);
+
+                    const viewport = page.getViewport({ scale: RENDER_SCALE });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    // Set initial width
+                    canvas.style.width = `${pdfScalePercent}%`;
+                    canvas.style.height = 'auto';
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+
+                    // Append canvas first (it will be blank initially)
+                    container.appendChild(canvas);
+
+                    // Wait for render
+                    await page.render(renderContext).promise;
+                }
+                loadingText.style.display = 'none';
+            } catch (error) {
+                console.error("Error rendering PDF:", error);
+                loadingText.innerText = "Ошибка отображения";
             }
         }
 
         function openPDF(pdfUrl) {
             if (pdfDoc) {
                 pdfDoc.destroy();
+                pdfDoc = null;
             }
-            
+
+            pdfModal.style.display = 'flex';
+            container.innerHTML = '';
+            container.appendChild(loadingText);
+            loadingText.style.display = 'block';
+
+            // Reset zoom to 100%
+            pdfScalePercent = 100;
+
             const loadingTask = pdfjsLib.getDocument(pdfUrl);
-            loadingTask.promise.then(function(pdfDoc_) {
+            loadingTask.promise.then(async function (pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                pdfContainer.style.display = 'flex';
-                pageNum = 1;
-                // Сбрасываем масштаб на 100% (соответствует ширине экрана)
-                scale = 1.0; 
-                renderPage(pageNum);
-            }).catch(function(error) {
+                await renderAllPages();
+            }).catch(function (error) {
                 alert('Ошибка загрузки PDF: ' + error.message);
+                closePDF();
             });
         }
 
         function closePDF() {
-            pdfContainer.style.display = 'none';
+            pdfModal.style.display = 'none';
             if (pdfDoc) {
                 pdfDoc.destroy();
                 pdfDoc = null;
             }
+            container.innerHTML = '';
         }
-        
-        // --- Функции масштабирования ---
+
+        // --- Zoom Functions ---
         function zoomIn() {
-            if (scale < MAX_SCALE) {
-                // Увеличиваем масштаб с шагом, округляя для точности
-                scale = parseFloat((scale + SCALE_STEP).toFixed(2));
-                queueRenderPage(pageNum);
+            if (pdfScalePercent < MAX_SCALE) {
+                pdfScalePercent += SCALE_STEP;
+                updateCanvasWidth();
             }
         }
 
         function zoomOut() {
-            if (scale > MIN_SCALE) {
-                // Уменьшаем масштаб с шагом, округляя для точности
-                scale = parseFloat((scale - SCALE_STEP).toFixed(2));
-                queueRenderPage(pageNum);
+            if (pdfScalePercent > MIN_SCALE) {
+                pdfScalePercent -= SCALE_STEP;
+                updateCanvasWidth();
             }
         }
-        // --- Конец функций масштабирования ---
 
-        // Обработчики событий
-        prevBtn.addEventListener('click', function() {
-            if (pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
-        });
-
-        nextBtn.addEventListener('click', function() {
-            if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
-        });
-        
         zoomInBtn.addEventListener('click', zoomIn);
         zoomOutBtn.addEventListener('click', zoomOut);
 
-        // Также обновляем масштаб при изменении размера окна (например, при повороте устройства)
-        window.addEventListener('resize', () => {
-             if (pdfDoc && pdfContainer.style.display === 'flex') {
-                // Перерисовываем с текущим масштабом, чтобы он адаптировался к новой ширине контейнера
-                renderPage(pageNum); 
-             }
+        // Close on clicking background
+        pdfModal.addEventListener('click', (e) => {
+            if (e.target === pdfModal) {
+                closePDF();
+            }
         });
+
     </script>
 </body>
+
 </html>
