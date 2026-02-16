@@ -330,14 +330,43 @@
         const MIN_SCALE = 50;
         const MAX_SCALE = 300;
 
-        function updateCanvasWidth() {
+        // Base width for canvas sizing
+        function getBaseWidth() {
+            return scrollContainer.clientWidth - 20;
+        }
+
+        function setCanvasWidths(pxWidth, smooth) {
             const canvases = container.querySelectorAll('canvas');
-            // Calculate pixel width based on container
-            const baseWidth = scrollContainer.clientWidth - 20; // minus padding
-            const pxWidth = baseWidth * (pdfScalePercent / 100);
             canvases.forEach(canvas => {
+                if (smooth) {
+                    canvas.style.transition = 'width 0.25s ease';
+                } else {
+                    canvas.style.transition = 'none';
+                }
                 canvas.style.width = pxWidth + 'px';
             });
+        }
+
+        function updateCanvasWidth(smooth) {
+            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+            setCanvasWidths(pxWidth, smooth !== false);
+        }
+
+        // Zoom to a specific point (contentX, contentY = coordinates in scroll content space)
+        function zoomToPoint(newScale, contentX, contentY) {
+            const oldScale = pdfScalePercent;
+            pdfScalePercent = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+            if (pdfScalePercent === oldScale) return;
+
+            const ratio = pdfScalePercent / oldScale;
+
+            // Update canvas sizes immediately (no transition during pinch)
+            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+            setCanvasWidths(pxWidth, false);
+
+            // Adjust scroll so the pinch center stays in the same screen position
+            scrollContainer.scrollLeft = contentX * ratio - (contentX - scrollContainer.scrollLeft);
+            scrollContainer.scrollTop = contentY * ratio - (contentY - scrollContainer.scrollTop);
         }
 
         async function renderAllPages() {
@@ -360,8 +389,7 @@
                     canvas.width = viewport.width;
 
                     // Set initial width in pixels
-                    const baseWidth = scrollContainer.clientWidth - 20;
-                    canvas.style.width = (baseWidth * (pdfScalePercent / 100)) + 'px';
+                    canvas.style.width = (getBaseWidth() * (pdfScalePercent / 100)) + 'px';
                     canvas.style.height = 'auto';
 
                     const renderContext = {
@@ -415,49 +443,101 @@
             container.innerHTML = '';
         }
 
-        // --- Zoom Functions ---
+        // --- Zoom button functions (smooth transition) ---
         function zoomIn() {
             if (pdfScalePercent < MAX_SCALE) {
                 pdfScalePercent += SCALE_STEP;
-                updateCanvasWidth();
+                updateCanvasWidth(true);
             }
         }
 
         function zoomOut() {
             if (pdfScalePercent > MIN_SCALE) {
                 pdfScalePercent -= SCALE_STEP;
-                updateCanvasWidth();
+                updateCanvasWidth(true);
             }
         }
 
         zoomInBtn.addEventListener('click', zoomIn);
         zoomOutBtn.addEventListener('click', zoomOut);
 
-        // --- Pinch-to-zoom on the scroll container ---
+        // --- Pinch-to-zoom with zoom-to-point ---
         let pinchStartDist = 0;
         let pinchStartScale = 100;
+        let pinchCenterContentX = 0;
+        let pinchCenterContentY = 0;
+        let pinchActive = false;
+        let rafPending = false;
+        let pendingPinchScale = 100;
 
         scrollContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
+                e.preventDefault();
+                pinchActive = true;
                 pinchStartDist = Math.hypot(
                     e.touches[0].clientX - e.touches[1].clientX,
                     e.touches[0].clientY - e.touches[1].clientY
                 );
                 pinchStartScale = pdfScalePercent;
+
+                // Pinch center in screen coords
+                const rect = scrollContainer.getBoundingClientRect();
+                const screenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const screenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+                // Convert to content-space coords
+                pinchCenterContentX = screenCX - rect.left + scrollContainer.scrollLeft;
+                pinchCenterContentY = screenCY - rect.top + scrollContainer.scrollTop;
             }
-        }, { passive: true });
+        }, { passive: false });
 
         scrollContainer.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2) {
+            if (e.touches.length === 2 && pinchActive) {
+                e.preventDefault();
                 const dist = Math.hypot(
                     e.touches[0].clientX - e.touches[1].clientX,
                     e.touches[0].clientY - e.touches[1].clientY
                 );
-                const newScale = Math.round(pinchStartScale * (dist / pinchStartDist));
-                pdfScalePercent = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
-                updateCanvasWidth();
+                pendingPinchScale = pinchStartScale * (dist / pinchStartDist);
+
+                // Throttle with rAF for smoothness
+                if (!rafPending) {
+                    rafPending = true;
+                    requestAnimationFrame(() => {
+                        rafPending = false;
+                        const oldScale = pdfScalePercent;
+                        const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, Math.round(pendingPinchScale)));
+                        if (newScale !== oldScale) {
+                            const ratio = newScale / oldScale;
+                            pdfScalePercent = newScale;
+
+                            // Update canvas widths without transition
+                            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+                            setCanvasWidths(pxWidth, false);
+
+                            // Keep pinch center under fingers
+                            const rect = scrollContainer.getBoundingClientRect();
+                            const screenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            const screenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+                            const newContentX = pinchCenterContentX * ratio;
+                            const newContentY = pinchCenterContentY * ratio;
+
+                            scrollContainer.scrollLeft = newContentX - (screenCX - rect.left);
+                            scrollContainer.scrollTop = newContentY - (screenCY - rect.top);
+
+                            // Update content center for next frame
+                            pinchCenterContentX = newContentX;
+                            pinchCenterContentY = newContentY;
+                        }
+                    });
+                }
             }
-        }, { passive: true });
+        }, { passive: false });
+
+        scrollContainer.addEventListener('touchend', () => {
+            pinchActive = false;
+        });
 
         // Close on clicking background
         pdfModal.addEventListener('click', (e) => {
