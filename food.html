@@ -467,8 +467,9 @@
         let pinchCenterContentX = 0;
         let pinchCenterContentY = 0;
         let pinchActive = false;
-        let rafPending = false;
-        let pendingPinchScale = 100;
+        let rafId = null;
+        // Damping factor: 0.5 = half speed, 1.0 = native speed
+        const PINCH_DAMPING = 0.5;
 
         scrollContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length === 2) {
@@ -498,45 +499,53 @@
                     e.touches[0].clientX - e.touches[1].clientX,
                     e.touches[0].clientY - e.touches[1].clientY
                 );
-                pendingPinchScale = pinchStartScale * (dist / pinchStartDist);
+
+                // Dampen: reduce zoom speed
+                const rawRatio = dist / pinchStartDist;
+                const dampedRatio = 1 + (rawRatio - 1) * PINCH_DAMPING;
+                const targetScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, Math.round(pinchStartScale * dampedRatio)));
+
+                // Store current finger positions for rAF callback
+                const currentScreenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const currentScreenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
 
                 // Throttle with rAF for smoothness
-                if (!rafPending) {
-                    rafPending = true;
-                    requestAnimationFrame(() => {
-                        rafPending = false;
-                        const oldScale = pdfScalePercent;
-                        const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, Math.round(pendingPinchScale)));
-                        if (newScale !== oldScale) {
-                            const ratio = newScale / oldScale;
-                            pdfScalePercent = newScale;
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => {
+                    rafId = null;
+                    if (!pinchActive) return; // Don't update if fingers lifted
 
-                            // Update canvas widths without transition
-                            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
-                            setCanvasWidths(pxWidth, false);
+                    const oldScale = pdfScalePercent;
+                    if (targetScale !== oldScale) {
+                        const ratio = targetScale / oldScale;
+                        pdfScalePercent = targetScale;
 
-                            // Keep pinch center under fingers
-                            const rect = scrollContainer.getBoundingClientRect();
-                            const screenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-                            const screenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                        // Update canvas widths without transition
+                        const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+                        setCanvasWidths(pxWidth, false);
 
-                            const newContentX = pinchCenterContentX * ratio;
-                            const newContentY = pinchCenterContentY * ratio;
+                        // Keep pinch center under fingers
+                        const rect = scrollContainer.getBoundingClientRect();
+                        const newContentX = pinchCenterContentX * ratio;
+                        const newContentY = pinchCenterContentY * ratio;
 
-                            scrollContainer.scrollLeft = newContentX - (screenCX - rect.left);
-                            scrollContainer.scrollTop = newContentY - (screenCY - rect.top);
+                        scrollContainer.scrollLeft = newContentX - (currentScreenCX - rect.left);
+                        scrollContainer.scrollTop = newContentY - (currentScreenCY - rect.top);
 
-                            // Update content center for next frame
-                            pinchCenterContentX = newContentX;
-                            pinchCenterContentY = newContentY;
-                        }
-                    });
-                }
+                        // Update content center for next frame
+                        pinchCenterContentX = newContentX;
+                        pinchCenterContentY = newContentY;
+                    }
+                });
             }
         }, { passive: false });
 
         scrollContainer.addEventListener('touchend', () => {
             pinchActive = false;
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
         });
 
         // Close on clicking background
