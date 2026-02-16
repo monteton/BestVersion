@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
@@ -123,7 +122,7 @@
             height: 100%;
             border-radius: 0;
             box-shadow: none;
-            overflow: hidden;
+            overflow: auto;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -153,15 +152,21 @@
         /* Контейнер для скроллинга страниц */
         .pdf-scroll-container {
             flex-grow: 1;
-            overflow-y: auto;
-            overflow-x: auto;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
             background-color: #cfc7b8;
-            /* Match view-pdf.html bg */
-            padding: 20px 10px;
+            padding: 20px 0;
+        }
+
+        /* Внутренний контейнер — центрирует при 100%, расширяется при зуме */
+        .pdf-inner {
             display: flex;
             flex-direction: column;
             gap: 20px;
             align-items: center;
+            min-width: 100%;
+            width: fit-content;
+            padding: 0 10px;
         }
 
         .pdf-scroll-container canvas {
@@ -295,8 +300,10 @@
                 </button>
             </div>
             <div class="pdf-scroll-container" id="pdf-scroll-container">
-                <!-- Canvases will be injected here -->
-                <div id="loading-text" style="text-align: center; margin-top: 20px; color: #555;">Загрузка...</div>
+                <div class="pdf-inner" id="pdf-inner">
+                    <!-- Canvases will be injected here -->
+                    <div id="loading-text" style="text-align: center; margin-top: 20px; color: #555;">Загрузка...</div>
+                </div>
             </div>
             <div class="pdf-controls">
                 <button id="zoom-out" title="Уменьшить"><i class="fa-solid fa-minus"></i></button>
@@ -310,7 +317,8 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
         const pdfModal = document.getElementById('pdf-modal-bg');
-        const container = document.getElementById('pdf-scroll-container');
+        const scrollContainer = document.getElementById('pdf-scroll-container');
+        const container = document.getElementById('pdf-inner');
         const zoomInBtn = document.getElementById('zoom-in');
         const zoomOutBtn = document.getElementById('zoom-out');
         const loadingText = document.getElementById('loading-text');
@@ -324,8 +332,11 @@
 
         function updateCanvasWidth() {
             const canvases = container.querySelectorAll('canvas');
+            // Calculate pixel width based on container
+            const baseWidth = scrollContainer.clientWidth - 20; // minus padding
+            const pxWidth = baseWidth * (pdfScalePercent / 100);
             canvases.forEach(canvas => {
-                canvas.style.width = `${pdfScalePercent}%`;
+                canvas.style.width = pxWidth + 'px';
             });
         }
 
@@ -348,8 +359,9 @@
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
 
-                    // Set initial width
-                    canvas.style.width = `${pdfScalePercent}%`;
+                    // Set initial width in pixels
+                    const baseWidth = scrollContainer.clientWidth - 20;
+                    canvas.style.width = (baseWidth * (pdfScalePercent / 100)) + 'px';
                     canvas.style.height = 'auto';
 
                     const renderContext = {
@@ -420,6 +432,32 @@
 
         zoomInBtn.addEventListener('click', zoomIn);
         zoomOutBtn.addEventListener('click', zoomOut);
+
+        // --- Pinch-to-zoom on the scroll container ---
+        let pinchStartDist = 0;
+        let pinchStartScale = 100;
+
+        scrollContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                pinchStartDist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                pinchStartScale = pdfScalePercent;
+            }
+        }, { passive: true });
+
+        scrollContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                const dist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const newScale = Math.round(pinchStartScale * (dist / pinchStartDist));
+                pdfScalePercent = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+                updateCanvasWidth();
+            }
+        }, { passive: true });
 
         // Close on clicking background
         pdfModal.addEventListener('click', (e) => {
