@@ -20,31 +20,18 @@
         }
     </script>
     <style>
-        /* Ensure html and body allow scrolling in all directions after zoom */
-        html,
-        body {
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x pan-y pinch-zoom;
-            overscroll-behavior: auto;
-            width: 100%;
-            min-height: 100vh;
-        }
-
         #pdf-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
             padding-bottom: 100px;
-            touch-action: pan-x pan-y pinch-zoom;
         }
 
         canvas {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             border-radius: 8px;
             max-width: 100%;
-            touch-action: pan-x pan-y pinch-zoom;
         }
 
         /* Make sure the fixed header doesn't block scroll/pan touch events */
