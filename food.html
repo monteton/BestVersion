@@ -324,26 +324,49 @@
         const loadingText = document.getElementById('loading-text');
 
         let pdfDoc = null;
-        let pdfScalePercent = 100; // 100% width
-        const RENDER_SCALE = 2.0; // High resolution render
+        let pdfScalePercent = 100;
+        const RENDER_SCALE = 2.0;
         const SCALE_STEP = 25;
         const MIN_SCALE = 50;
         const MAX_SCALE = 300;
 
-        // Base width for canvas sizing
+        // --- Lazy rendering state ---
+        const BUFFER_PAGES = 2; // render this many pages above/below viewport
+        let pageSlots = []; // array of { el, rendered, rendering, pageNum, aspectRatio }
+        let lazyScrollRAF = null;
+
         function getBaseWidth() {
             return scrollContainer.clientWidth - 20;
         }
 
-        function setCanvasWidths(pxWidth, smooth) {
-            const canvases = container.querySelectorAll('canvas');
-            canvases.forEach(canvas => {
+        // Update widths on all rendered canvases AND placeholder heights
+        function updateAllWidths(smooth) {
+            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+            pageSlots.forEach(slot => {
                 if (smooth) {
-                    canvas.style.transition = 'width 0.25s ease';
+                    slot.el.style.transition = 'width 0.25s ease, height 0.25s ease';
                 } else {
-                    canvas.style.transition = 'none';
+                    slot.el.style.transition = 'none';
                 }
-                canvas.style.width = pxWidth + 'px';
+                slot.el.style.width = pxWidth + 'px';
+                // For placeholders AND canvases, maintain aspect ratio via height
+                if (slot.aspectRatio) {
+                    slot.el.style.height = (pxWidth / slot.aspectRatio) + 'px';
+                }
+            });
+        }
+
+        function setCanvasWidths(pxWidth, smooth) {
+            pageSlots.forEach(slot => {
+                if (smooth) {
+                    slot.el.style.transition = 'width 0.25s ease, height 0.25s ease';
+                } else {
+                    slot.el.style.transition = 'none';
+                }
+                slot.el.style.width = pxWidth + 'px';
+                if (slot.aspectRatio) {
+                    slot.el.style.height = (pxWidth / slot.aspectRatio) + 'px';
+                }
             });
         }
 
@@ -352,62 +375,179 @@
             setCanvasWidths(pxWidth, smooth !== false);
         }
 
-        // Zoom to a specific point (contentX, contentY = coordinates in scroll content space)
+        // Zoom to a specific point
         function zoomToPoint(newScale, contentX, contentY) {
             const oldScale = pdfScalePercent;
             pdfScalePercent = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
             if (pdfScalePercent === oldScale) return;
 
             const ratio = pdfScalePercent / oldScale;
-
-            // Update canvas sizes immediately (no transition during pinch)
             const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
             setCanvasWidths(pxWidth, false);
 
-            // Adjust scroll so the pinch center stays in the same screen position
             scrollContainer.scrollLeft = contentX * ratio - (contentX - scrollContainer.scrollLeft);
             scrollContainer.scrollTop = contentY * ratio - (contentY - scrollContainer.scrollTop);
         }
 
-        async function renderAllPages() {
-            container.innerHTML = ''; // Clear previous
+        // --- Lazy page rendering ---
+        async function renderPage(slot) {
+            if (slot.rendered || slot.rendering || !pdfDoc) return;
+            slot.rendering = true;
+
+            try {
+                const page = await pdfDoc.getPage(slot.pageNum);
+                const viewport = page.getViewport({ scale: RENDER_SCALE });
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+                const aspectRatio = viewport.width / viewport.height;
+                canvas.style.width = pxWidth + 'px';
+                canvas.style.height = (pxWidth / aspectRatio) + 'px';
+                canvas.style.borderRadius = '8px';
+                canvas.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)';
+                canvas.style.backgroundColor = 'white';
+                canvas.style.display = 'block';
+
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                // Replace placeholder with rendered canvas
+                const parent = slot.el.parentNode;
+                if (parent) {
+                    parent.replaceChild(canvas, slot.el);
+                    slot.el = canvas;
+                    slot.rendered = true;
+                }
+            } catch (err) {
+                console.error('Error rendering page ' + slot.pageNum, err);
+            }
+            slot.rendering = false;
+        }
+
+        function unrenderPage(slot) {
+            if (!slot.rendered) return;
+            // Replace canvas with a lightweight placeholder div
+            const placeholder = createPlaceholder(slot);
+            const parent = slot.el.parentNode;
+            if (parent) {
+                parent.replaceChild(placeholder, slot.el);
+                slot.el = placeholder;
+                slot.rendered = false;
+            }
+        }
+
+        function createPlaceholder(slot) {
+            const div = document.createElement('div');
+            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
+            div.style.width = pxWidth + 'px';
+            div.style.height = (pxWidth / slot.aspectRatio) + 'px';
+            div.style.borderRadius = '8px';
+            div.style.backgroundColor = '#e8e4e0';
+            div.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)';
+            div.style.display = 'block';
+            return div;
+        }
+
+        function getVisibleRange() {
+            const scrollTop = scrollContainer.scrollTop;
+            const viewHeight = scrollContainer.clientHeight;
+            const scrollBottom = scrollTop + viewHeight;
+
+            let firstVisible = -1;
+            let lastVisible = -1;
+
+            let cumulativeTop = 0;
+            for (let i = 0; i < pageSlots.length; i++) {
+                const slotHeight = pageSlots[i].el.offsetHeight || 0;
+                const gap = 20; // gap between pages
+                const slotBottom = cumulativeTop + slotHeight;
+
+                if (slotBottom >= scrollTop && cumulativeTop <= scrollBottom) {
+                    if (firstVisible === -1) firstVisible = i;
+                    lastVisible = i;
+                }
+                cumulativeTop = slotBottom + gap;
+            }
+
+            if (firstVisible === -1) {
+                firstVisible = 0;
+                lastVisible = 0;
+            }
+
+            return {
+                first: Math.max(0, firstVisible - BUFFER_PAGES),
+                last: Math.min(pageSlots.length - 1, lastVisible + BUFFER_PAGES)
+            };
+        }
+
+        function lazyRenderCheck() {
+            if (!pdfDoc || pageSlots.length === 0) return;
+
+            const { first, last } = getVisibleRange();
+
+            // Render visible + buffer pages
+            for (let i = first; i <= last; i++) {
+                renderPage(pageSlots[i]);
+            }
+
+            // Unrender pages far from viewport to save memory
+            for (let i = 0; i < pageSlots.length; i++) {
+                if (i < first - BUFFER_PAGES || i > last + BUFFER_PAGES) {
+                    unrenderPage(pageSlots[i]);
+                }
+            }
+        }
+
+        function onScrollLazy() {
+            if (lazyScrollRAF) cancelAnimationFrame(lazyScrollRAF);
+            lazyScrollRAF = requestAnimationFrame(() => {
+                lazyScrollRAF = null;
+                lazyRenderCheck();
+            });
+        }
+
+        async function setupLazyPages() {
+            container.innerHTML = '';
             container.appendChild(loadingText);
             loadingText.style.display = 'block';
+            loadingText.innerText = 'Загрузка...';
 
             if (!pdfDoc) return;
 
-            try {
-                // Render pages sequentially
-                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-                    const page = await pdfDoc.getPage(pageNum);
+            pageSlots = [];
+            const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
 
-                    const viewport = page.getViewport({ scale: RENDER_SCALE });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
+            // Create placeholders for all pages (lightweight — no canvas)
+            for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                const page = await pdfDoc.getPage(pageNum);
+                const viewport = page.getViewport({ scale: 1 });
+                const aspectRatio = viewport.width / viewport.height;
 
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
+                const slot = {
+                    pageNum: pageNum,
+                    aspectRatio: aspectRatio,
+                    rendered: false,
+                    rendering: false,
+                    el: null
+                };
 
-                    // Set initial width in pixels
-                    canvas.style.width = (getBaseWidth() * (pdfScalePercent / 100)) + 'px';
-                    canvas.style.height = 'auto';
-
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-
-                    // Append canvas first (it will be blank initially)
-                    container.appendChild(canvas);
-
-                    // Wait for render
-                    await page.render(renderContext).promise;
-                }
-                loadingText.style.display = 'none';
-            } catch (error) {
-                console.error("Error rendering PDF:", error);
-                loadingText.innerText = "Ошибка отображения";
+                const placeholder = createPlaceholder(slot);
+                slot.el = placeholder;
+                container.appendChild(placeholder);
+                pageSlots.push(slot);
             }
+
+            loadingText.style.display = 'none';
+
+            // Start lazy rendering
+            scrollContainer.removeEventListener('scroll', onScrollLazy);
+            scrollContainer.addEventListener('scroll', onScrollLazy, { passive: true });
+
+            // Render initial visible pages
+            lazyRenderCheck();
         }
 
         function openPDF(pdfUrl) {
@@ -416,18 +556,19 @@
                 pdfDoc = null;
             }
 
+            pageSlots = [];
             pdfModal.style.display = 'flex';
             container.innerHTML = '';
             container.appendChild(loadingText);
             loadingText.style.display = 'block';
+            loadingText.innerText = 'Загрузка...';
 
-            // Reset zoom to 100%
             pdfScalePercent = 100;
 
             const loadingTask = pdfjsLib.getDocument(pdfUrl);
             loadingTask.promise.then(async function (pdfDoc_) {
                 pdfDoc = pdfDoc_;
-                await renderAllPages();
+                await setupLazyPages();
             }).catch(function (error) {
                 alert('Ошибка загрузки PDF: ' + error.message);
                 closePDF();
@@ -436,25 +577,29 @@
 
         function closePDF() {
             pdfModal.style.display = 'none';
+            scrollContainer.removeEventListener('scroll', onScrollLazy);
             if (pdfDoc) {
                 pdfDoc.destroy();
                 pdfDoc = null;
             }
+            pageSlots = [];
             container.innerHTML = '';
         }
 
-        // --- Zoom button functions (smooth transition) ---
+        // --- Zoom button functions ---
         function zoomIn() {
             if (pdfScalePercent < MAX_SCALE) {
                 pdfScalePercent += SCALE_STEP;
-                updateCanvasWidth(true);
+                updateAllWidths(true);
+                setTimeout(lazyRenderCheck, 300);
             }
         }
 
         function zoomOut() {
             if (pdfScalePercent > MIN_SCALE) {
                 pdfScalePercent -= SCALE_STEP;
-                updateCanvasWidth(true);
+                updateAllWidths(true);
+                setTimeout(lazyRenderCheck, 300);
             }
         }
 
@@ -468,7 +613,6 @@
         let pinchCenterContentY = 0;
         let pinchActive = false;
         let rafId = null;
-        // Damping factor: 0.5 = half speed, 1.0 = native speed
         const PINCH_DAMPING = 0.5;
 
         scrollContainer.addEventListener('touchstart', (e) => {
@@ -481,12 +625,10 @@
                 );
                 pinchStartScale = pdfScalePercent;
 
-                // Pinch center in screen coords
                 const rect = scrollContainer.getBoundingClientRect();
                 const screenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
                 const screenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
 
-                // Convert to content-space coords
                 pinchCenterContentX = screenCX - rect.left + scrollContainer.scrollLeft;
                 pinchCenterContentY = screenCY - rect.top + scrollContainer.scrollTop;
             }
@@ -500,31 +642,26 @@
                     e.touches[0].clientY - e.touches[1].clientY
                 );
 
-                // Dampen: reduce zoom speed
                 const rawRatio = dist / pinchStartDist;
                 const dampedRatio = 1 + (rawRatio - 1) * PINCH_DAMPING;
                 const targetScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, Math.round(pinchStartScale * dampedRatio)));
 
-                // Store current finger positions for rAF callback
                 const currentScreenCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
                 const currentScreenCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
 
-                // Throttle with rAF for smoothness
                 if (rafId) cancelAnimationFrame(rafId);
                 rafId = requestAnimationFrame(() => {
                     rafId = null;
-                    if (!pinchActive) return; // Don't update if fingers lifted
+                    if (!pinchActive) return;
 
                     const oldScale = pdfScalePercent;
                     if (targetScale !== oldScale) {
                         const ratio = targetScale / oldScale;
                         pdfScalePercent = targetScale;
 
-                        // Update canvas widths without transition
                         const pxWidth = getBaseWidth() * (pdfScalePercent / 100);
                         setCanvasWidths(pxWidth, false);
 
-                        // Keep pinch center under fingers
                         const rect = scrollContainer.getBoundingClientRect();
                         const newContentX = pinchCenterContentX * ratio;
                         const newContentY = pinchCenterContentY * ratio;
@@ -532,7 +669,6 @@
                         scrollContainer.scrollLeft = newContentX - (currentScreenCX - rect.left);
                         scrollContainer.scrollTop = newContentY - (currentScreenCY - rect.top);
 
-                        // Update content center for next frame
                         pinchCenterContentX = newContentX;
                         pinchCenterContentY = newContentY;
                     }
@@ -546,6 +682,8 @@
                 cancelAnimationFrame(rafId);
                 rafId = null;
             }
+            // Re-check lazy rendering after pinch ends
+            setTimeout(lazyRenderCheck, 100);
         });
 
         // Close on clicking background
